@@ -1,0 +1,195 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import CardStat from '../../components/CardStat';
+import ChartCard from '../../components/ChartCard';
+import CTAButton from '../../components/CTAButton';
+
+// Mock data - in real app, this would come from the vault ID
+const vaultData = [1000, 1200, 1100, 1400, 1600, 1800, 2100, 1900, 2200, 2500, 2700, 2900];
+const labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8', 'Week 9', 'Week 10', 'Week 11', 'Week 12'];
+---
+
+<Layout title="Vault Dashboard - VaultPilot">
+  <Navbar />
+  
+  <main class="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <!-- Header -->
+      <div class="mb-12 animate-fade-in">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+          <div>
+            <h1 class="text-4xl font-bold text-white mb-4">
+              ETH TWAP <span class="bg-gradient-to-r from-primary-green to-primary-purple bg-clip-text text-transparent">Smart Vault</span>
+            </h1>
+            <p class="text-gray-300 mb-4">Contract: 0x1234...5678 • Strategy: TWAP • Created: Jan 15, 2025</p>
+            <div class="flex items-center space-x-4">
+              <span class="px-3 py-1 bg-primary-green/20 text-primary-green text-sm font-medium rounded-full">
+                Active
+              </span>
+              <span class="px-3 py-1 bg-blue-500/20 text-blue-400 text-sm font-medium rounded-full">
+                ETH/USDC
+              </span>
+            </div>
+          </div>
+          <div class="mt-6 lg:mt-0 flex space-x-4">
+            <CTAButton variant="green" client:load>
+              Execute Trade
+            </CTAButton>
+            <CTAButton variant="outline" client:load>
+              Pause Strategy
+            </CTAButton>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <CardStat 
+          client:load
+          title="Vault Balance"
+          value="$45,230"
+          change="+18.5%"
+          isPositive={true}
+          gradient="green"
+        />
+        <CardStat 
+          client:load
+          title="Total Trades"
+          value="342"
+          change="+24.7%"
+          isPositive={true}
+          gradient="purple"
+        />
+        <CardStat 
+          client:load
+          title="ROI"
+          value="28.4%"
+          change="+2.1%"
+          isPositive={true}
+          gradient="green"
+        />
+        <CardStat 
+          client:load
+          title="Sentiment Score"
+          value="0.73"
+          change="+5.3%"
+          isPositive={true}
+          gradient="purple"
+        />
+      </div>
+
+      <!-- Charts Grid -->
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-12">
+        <ChartCard
+          client:load
+          title="Vault Performance (USD)"
+          data={vaultData}
+          labels={labels}
+          gradient="green"
+        />
+        
+        <div class="p-6 bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl animate-fade-in">
+          <h3 class="text-lg font-semibold text-white mb-6">AI Insights & Strategy</h3>
+          <div class="space-y-4">
+            <div class="p-4 bg-primary-green/10 border border-primary-green/20 rounded-lg">
+              <div class="flex items-center space-x-2 mb-2">
+                <div class="w-2 h-2 bg-primary-green rounded-full"></div>
+                <span class="text-primary-green font-medium">AI Recommendation</span>
+              </div>
+              <p class="text-gray-300 text-sm">
+                Current market volatility suggests increasing TWAP interval to 4h for better risk management.
+              </p>
+              <button class="mt-3 px-4 py-2 bg-primary-green/20 hover:bg-primary-green/30 text-primary-green rounded-lg text-sm transition-colors">
+                Apply Suggestion
+              </button>
+            </div>
+
+            <div class="space-y-3">
+              <h4 class="text-white font-medium">Strategy Parameters</h4>
+              <div class="flex justify-between">
+                <span class="text-gray-400">Time Interval</span>
+                <span class="text-white">1 Hour</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-400">Max Drawdown</span>
+                <span class="text-white">10%</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-400">Next Trade</span>
+                <span class="text-primary-green">In 23 minutes</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-6 pt-6 border-t border-gray-700">
+            <h4 class="text-white font-medium mb-4">Recent Trades</h4>
+            <div class="space-y-3">
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-gray-400">Buy ETH @ $3,245</span>
+                <span class="text-primary-green">+$89.23</span>
+              </div>
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-gray-400">Sell ETH @ $3,289</span>
+                <span class="text-primary-green">+$156.78</span>
+              </div>
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-gray-400">Buy ETH @ $3,198</span>
+                <span class="text-primary-green">+$234.12</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions Panel -->
+      <div class="bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-8 animate-fade-in">
+        <h3 class="text-2xl font-bold text-white mb-6">Vault Management</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="text-center">
+            <div class="w-16 h-16 bg-gradient-to-br from-primary-green to-emerald-400 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <h4 class="text-white font-semibold mb-2">Execute Now</h4>
+            <p class="text-gray-400 mb-4">Manually trigger a trade</p>
+            <CTAButton variant="green" size="sm" client:load>
+              Execute
+            </CTAButton>
+          </div>
+          
+          <div class="text-center">
+            <div class="w-16 h-16 bg-gradient-to-br from-primary-purple to-violet-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+            <h4 class="text-white font-semibold mb-2">Settings</h4>
+            <p class="text-gray-400 mb-4">Adjust strategy parameters</p>
+            <CTAButton variant="purple" size="sm" client:load>
+              Configure
+            </CTAButton>
+          </div>
+          
+          <div class="text-center">
+            <div class="w-16 h-16 bg-gradient-to-br from-gray-600 to-gray-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h4 class="text-white font-semibold mb-2">Pause</h4>
+            <p class="text-gray-400 mb-4">Temporarily stop trading</p>
+            <CTAButton variant="outline" size="sm" client:load>
+              Pause
+            </CTAButton>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

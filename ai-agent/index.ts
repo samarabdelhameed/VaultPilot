@@ -1,2 +1,1 @@
-// ai-agent/index.ts
-console.log("🧠 AI Agent is ready.");
+console.log('AI Agent is running!'); 

@@ -1,0 +1,272 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import WalletConnect from '../components/WalletConnect';
+import CTAButton from '../components/CTAButton';
+import CardStat from '../components/CardStat';
+import ChartCard from '../components/ChartCard';
+
+// Mock data for the chart
+const marketData = [12000, 15000, 18000, 22000, 28000, 35000, 42000, 38000, 45000, 52000, 58000, 65000];
+const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+---
+
+<Layout title="VaultPilot - Smart Vault AI App">
+  <Navbar />
+  
+  <main class="relative">
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto text-center">
+        <!-- VaultPilot Logo Animation -->
+        <div class="mb-8 animate-fade-in">
+          <div class="inline-flex items-center space-x-4 mb-6">
+            <div class="w-16 h-16 bg-gradient-to-br from-primary-green to-primary-purple rounded-2xl flex items-center justify-center animate-float">
+              <span class="text-white font-bold text-2xl">VP</span>
+            </div>
+            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-primary-green to-primary-purple bg-clip-text text-transparent">
+              VaultPilot
+            </h1>
+          </div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="animate-slide-up">
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+            We're here to help you achieve
+            <span class="bg-gradient-to-r from-primary-green to-primary-purple bg-clip-text text-transparent">
+              financial success
+            </span>
+          </h1>
+          <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+            Create, manage, and analyze DeFi strategies using AI and on-chain smart contracts. Deploy your first intelligent vault in minutes.
+          </p>
+          
+          <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <WalletConnect client:load className="text-lg px-8 py-4" />
+            <CTAButton variant="outline" size="lg" href="/create-vault" client:load>
+              <span>Create Your First Smart Vault</span>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </CTAButton>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Market Stats Section -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold text-white mb-4">Market Overview</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">
+            Real-time DeFi market statistics and vault performance metrics.
+          </p>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <CardStat 
+            client:load
+            title="Total Market Size"
+            value="$2.4B"
+            change="+12.5%"
+            isPositive={true}
+            gradient="green"
+          />
+          <CardStat 
+            client:load
+            title="Total Available"
+            value="$847M"
+            change="+8.3%"
+            isPositive={true}
+            gradient="purple"
+          />
+          <CardStat 
+            client:load
+            title="Current Vault Value"
+            value="$156M"
+            change="+24.7%"
+            isPositive={true}
+            gradient="green"
+          />
+          <CardStat 
+            client:load
+            title="Active Strategies"
+            value="1,247"
+            change="+156 today"
+            isPositive={true}
+            gradient="purple"
+          />
+        </div>
+
+        <!-- Chart and CTA Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- Chart takes 2 columns -->
+          <div class="lg:col-span-2">
+            <ChartCard
+              client:load
+              title="DeFi Market Performance"
+              data={marketData}
+              labels={labels}
+              gradient="green"
+            />
+          </div>
+
+          <!-- Investment CTA Card -->
+          <div class="lg:col-span-1">
+            <div class="h-full p-8 bg-glass-gradient backdrop-blur-md border border-white/20 rounded-2xl shadow-glass hover:shadow-glass-hover transition-all duration-300 animate-fade-in">
+              <div class="flex items-center space-x-3 mb-6">
+                <div class="w-12 h-12 bg-gradient-to-br from-primary-purple to-violet-500 rounded-full flex items-center justify-center animate-bounce-gentle">
+                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-white">Start Investing</h3>
+              </div>
+              
+              <p class="text-gray-300 mb-6">
+                Deploy AI-powered DeFi strategies and start earning passive income with institutional-grade security.
+              </p>
+
+              <div class="space-y-4 mb-8">
+                <div class="flex items-center space-x-3">
+                  <div class="w-2 h-2 bg-primary-green rounded-full"></div>
+                  <span class="text-gray-300 text-sm">AI-optimized strategies</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                  <div class="w-2 h-2 bg-primary-green rounded-full"></div>
+                  <span class="text-gray-300 text-sm">Real-time risk management</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                  <div class="w-2 h-2 bg-primary-green rounded-full"></div>
+                  <span class="text-gray-300 text-sm">Automated rebalancing</span>
+                </div>
+              </div>
+
+              <CTAButton variant="purple" size="lg" href="/create-vault" className="w-full" client:load>
+                <span>Create Smart Vault</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+              </CTAButton>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI-Powered Features Section -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold text-white mb-4">AI-Powered Features</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">
+            Experience the future of DeFi with intelligent automation and advanced analytics.
+          </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="text-center p-8 bg-glass-gradient backdrop-blur-md border border-white/20 rounded-2xl shadow-glass hover:shadow-glass-hover animate-fade-in transition-all duration-300 transform hover:scale-[1.02] group">
+            <div class="w-16 h-16 bg-gradient-to-br from-primary-green to-emerald-400 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-white mb-4">Smart Strategies</h3>
+            <p class="text-gray-400">TWAP, Sentiment Analysis, and Hybrid strategies powered by machine learning algorithms.</p>
+          </div>
+
+          <div class="text-center p-8 bg-glass-gradient backdrop-blur-md border border-white/20 rounded-2xl shadow-glass hover:shadow-glass-hover animate-fade-in transition-all duration-300 transform hover:scale-[1.02] group">
+            <div class="w-16 h-16 bg-gradient-to-br from-primary-purple to-violet-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-white mb-4">Real-time Analytics</h3>
+            <p class="text-gray-400">Advanced backtesting, performance tracking, and risk management with live market data.</p>
+          </div>
+
+          <div class="text-center p-8 bg-glass-gradient backdrop-blur-md border border-white/20 rounded-2xl shadow-glass hover:shadow-glass-hover animate-fade-in transition-all duration-300 transform hover:scale-[1.02] group">
+            <div class="w-16 h-16 bg-gradient-to-br from-primary-green to-primary-purple rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-white mb-4">NFT Marketplace</h3>
+            <p class="text-gray-400">Trade vault ownership as NFTs and discover high-performing strategies from other users.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold text-white mb-4">How VaultPilot Works</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">
+            Simple steps to start your DeFi journey with AI-powered automation.
+          </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div class="text-center">
+            <div class="w-16 h-16 bg-gradient-to-br from-primary-green to-primary-purple rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce-gentle">
+              <span class="text-black font-bold text-xl">1</span>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-3">Connect Wallet</h3>
+            <p class="text-gray-400 text-sm">Connect your MetaMask or WalletConnect to get started</p>
+          </div>
+
+          <div class="text-center">
+            <div class="w-16 h-16 bg-gradient-to-br from-primary-green to-primary-purple rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce-gentle" style="animation-delay: 0.2s;">
+              <span class="text-black font-bold text-xl">2</span>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-3">Create Vault</h3>
+            <p class="text-gray-400 text-sm">Choose your strategy, set parameters, and deploy your smart vault</p>
+          </div>
+
+          <div class="text-center">
+            <div class="w-16 h-16 bg-gradient-to-br from-primary-green to-primary-purple rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce-gentle" style="animation-delay: 0.4s;">
+              <span class="text-black font-bold text-xl">3</span>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-3">AI Optimization</h3>
+            <p class="text-gray-400 text-sm">Let AI analyze market conditions and optimize your strategy</p>
+          </div>
+
+          <div class="text-center">
+            <div class="w-16 h-16 bg-gradient-to-br from-primary-green to-primary-purple rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce-gentle" style="animation-delay: 0.6s;">
+              <span class="text-black font-bold text-xl">4</span>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-3">Earn Rewards</h3>
+            <p class="text-gray-400 text-sm">Monitor performance and earn passive income automatically</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .slider::-webkit-slider-thumb {
+    appearance: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #00FFBF, #A259FF);
+    cursor: pointer;
+  }
+
+  .slider::-moz-range-thumb {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #00FFBF, #A259FF);
+    cursor: pointer;
+    border: none;
+  }
+</style>

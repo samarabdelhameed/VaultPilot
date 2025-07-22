@@ -1,0 +1,199 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import ChartCard from '../components/ChartCard';
+import CTAButton from '../components/CTAButton';
+import CardStat from '../components/CardStat';
+
+const backtestData = [10000, 10500, 9800, 11200, 12100, 11800, 13500, 14200, 13900, 15600, 16800, 18200];
+const benchmarkData = [10000, 10200, 10100, 10400, 10600, 10500, 10800, 11000, 10900, 11200, 11400, 11600];
+const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+---
+
+<Layout title="Strategy Backtesting - VaultPilot">
+  <Navbar />
+  
+  <main class="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <!-- Header -->
+      <div class="text-center mb-12 animate-fade-in">
+        <h1 class="text-4xl font-bold text-white mb-4">
+          Strategy <span class="bg-gradient-to-r from-primary-green to-primary-purple bg-clip-text text-transparent">Backtesting</span>
+        </h1>
+        <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+          Test your investment strategies against historical data to optimize performance and minimize risk.
+        </p>
+      </div>
+
+      <!-- Strategy Configuration -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        <div class="lg:col-span-1">
+          <div class="p-6 bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl animate-fade-in">
+            <h3 class="text-lg font-semibold text-white mb-6">Backtest Configuration</h3>
+            
+            <div class="space-y-6">
+              <div>
+                <label class="block text-gray-300 text-sm font-medium mb-2">Strategy Type</label>
+                <select class="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-green focus:border-transparent text-white">
+                  <option>DeFi Yield Farming</option>
+                  <option>Liquidity Mining</option>
+                  <option>Arbitrage Strategy</option>
+                  <option>Index Fund</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-gray-300 text-sm font-medium mb-2">Time Period</label>
+                <select class="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-green focus:border-transparent text-white">
+                  <option>Last 6 Months</option>
+                  <option>Last Year</option>
+                  <option>Last 2 Years</option>
+                  <option>All Time</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-gray-300 text-sm font-medium mb-2">Initial Investment</label>
+                <input 
+                  type="number" 
+                  placeholder="10000" 
+                  class="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-green focus:border-transparent text-white placeholder-gray-400"
+                />
+              </div>
+
+              <div>
+                <label class="block text-gray-300 text-sm font-medium mb-2">Risk Tolerance</label>
+                <input 
+                  type="range" 
+                  min="1" 
+                  max="10" 
+                  value="5" 
+                  class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer slider"
+                />
+                <div class="flex justify-between text-xs text-gray-400 mt-1">
+                  <span>Conservative</span>
+                  <span>Aggressive</span>
+                </div>
+              </div>
+
+              <CTAButton variant="green" size="md" className="w-full" client:load>
+                Run Backtest
+              </CTAButton>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-2">
+          <ChartCard
+            client:load
+            title="Strategy Performance vs Benchmark"
+            data={backtestData}
+            labels={labels}
+            gradient="green"
+          />
+        </div>
+      </div>
+
+      <!-- Results Stats -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <CardStat 
+          client:load
+          title="Total Return"
+          value="82.3%"
+          change="+67.1% vs benchmark"
+          isPositive={true}
+          gradient="green"
+        />
+        <CardStat 
+          client:load
+          title="Max Drawdown"
+          value="-12.4%"
+          change="Better than benchmark"
+          isPositive={true}
+          gradient="purple"
+        />
+        <CardStat 
+          client:load
+          title="Sharpe Ratio"
+          value="2.34"
+          change="Excellent"
+          isPositive={true}
+          gradient="green"
+        />
+        <CardStat 
+          client:load
+          title="Win Rate"
+          value="74.2%"
+          change="+8.3% improvement"
+          isPositive={true}
+          gradient="purple"
+        />
+      </div>
+
+      <!-- Detailed Analysis -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="p-6 bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl animate-fade-in">
+          <h3 class="text-lg font-semibold text-white mb-6">Risk Metrics</h3>
+          <div class="space-y-4">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-300">Volatility</span>
+              <span class="text-white">18.4%</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-300">Beta</span>
+              <span class="text-white">0.87</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-300">Alpha</span>
+              <span class="text-primary-green">4.2%</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-300">VaR (95%)</span>
+              <span class="text-white">-3.8%</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-300">Sortino Ratio</span>
+              <span class="text-primary-green">3.12</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl animate-fade-in">
+          <h3 class="text-lg font-semibold text-white mb-6">Performance Summary</h3>
+          <div class="space-y-4">
+            <div class="p-4 bg-primary-green/10 border border-primary-green/20 rounded-lg">
+              <div class="flex items-center space-x-2 mb-2">
+                <div class="w-2 h-2 bg-primary-green rounded-full"></div>
+                <span class="text-primary-green font-medium">Excellent Performance</span>
+              </div>
+              <p class="text-gray-300 text-sm">
+                This strategy significantly outperformed the benchmark with lower volatility and excellent risk-adjusted returns.
+              </p>
+            </div>
+
+            <div class="p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+              <div class="flex items-center space-x-2 mb-2">
+                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <span class="text-blue-400 font-medium">Key Insights</span>
+              </div>
+              <ul class="text-gray-300 text-sm space-y-1">
+                <li>• Strong performance during market volatility</li>
+                <li>• Consistent yield generation</li>
+                <li>• Low correlation with traditional assets</li>
+              </ul>
+            </div>
+
+            <div class="mt-6">
+              <CTAButton variant="purple" className="w-full" client:load>
+                Deploy This Strategy
+              </CTAButton>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

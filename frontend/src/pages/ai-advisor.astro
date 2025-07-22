@@ -1,0 +1,194 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import CTAButton from '../components/CTAButton';
+import CardStat from '../components/CardStat';
+---
+
+<Layout title="AI Advisor - VaultPilot">
+  <Navbar />
+  
+  <main class="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <!-- Header -->
+      <div class="text-center mb-12 animate-fade-in">
+        <h1 class="text-4xl font-bold text-white mb-4">
+          AI <span class="bg-gradient-to-r from-primary-green to-primary-purple bg-clip-text text-transparent">Investment Advisor</span>
+        </h1>
+        <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+          Get personalized investment recommendations powered by machine learning and real-time market analysis.
+        </p>
+      </div>
+
+      <!-- AI Chat Interface -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        <div class="lg:col-span-2">
+          <div class="p-6 bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl animate-fade-in">
+            <div class="flex items-center space-x-3 mb-6">
+              <div class="w-10 h-10 bg-gradient-to-br from-primary-green to-primary-purple rounded-full flex items-center justify-center">
+                <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-white">AI Advisor</h3>
+                <p class="text-gray-400 text-sm">Powered by GPT-4 & Real-time Data</p>
+              </div>
+              <div class="ml-auto">
+                <div class="w-3 h-3 bg-primary-green rounded-full animate-pulse"></div>
+              </div>
+            </div>
+
+            <div class="space-y-4 h-96 overflow-y-auto mb-4 pr-2">
+              <!-- AI Message -->
+              <div class="flex items-start space-x-3">
+                <div class="w-8 h-8 bg-gradient-to-br from-primary-green to-primary-purple rounded-full flex items-center justify-center">
+                  <span class="text-xs text-black font-bold">AI</span>
+                </div>
+                <div class="bg-gray-800/50 rounded-2xl rounded-tl-none p-4 max-w-md">
+                  <p class="text-white text-sm">
+                    Hello! I've analyzed your portfolio and market conditions. Based on current DeFi trends and your risk profile, I have some recommendations for you.
+                  </p>
+                </div>
+              </div>
+
+              <!-- User Message -->
+              <div class="flex items-start space-x-3 justify-end">
+                <div class="bg-primary-green/20 rounded-2xl rounded-tr-none p-4 max-w-md">
+                  <p class="text-white text-sm">
+                    What's the best strategy for maximizing yield in the current market?
+                  </p>
+                </div>
+                <div class="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center">
+                  <span class="text-xs text-white">You</span>
+                </div>
+              </div>
+
+              <!-- AI Response -->
+              <div class="flex items-start space-x-3">
+                <div class="w-8 h-8 bg-gradient-to-br from-primary-green to-primary-purple rounded-full flex items-center justify-center">
+                  <span class="text-xs text-black font-bold">AI</span>
+                </div>
+                <div class="bg-gray-800/50 rounded-2xl rounded-tl-none p-4 max-w-md">
+                  <p class="text-white text-sm mb-2">
+                    Based on my analysis, here are the top 3 strategies for you:
+                  </p>
+                  <ol class="text-white text-sm space-y-1">
+                    <li>1. <span class="text-primary-green">Compound Finance</span> - 12.4% APY, Low Risk</li>
+                    <li>2. <span class="text-primary-purple">Curve 3Pool</span> - 18.7% APY, Medium Risk</li>
+                    <li>3. <span class="text-primary-green">Yearn USDC Vault</span> - 24.3% APY, Higher Risk</li>
+                  </ol>
+                  <div class="mt-3">
+                    <CTAButton variant="green" size="sm" client:load>
+                      Apply Recommendation
+                    </CTAButton>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Message Input -->
+            <div class="flex space-x-3">
+              <input
+                type="text"
+                placeholder="Ask me anything about DeFi strategies..."
+                class="flex-1 px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-green focus:border-transparent text-white placeholder-gray-400 transition-all duration-200"
+              />
+              <button class="px-6 py-3 bg-gradient-to-r from-primary-green to-primary-purple text-black font-medium rounded-lg hover:shadow-glow transition-all duration-200">
+                Send
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Insights Panel -->
+        <div class="space-y-6">
+          <div class="p-6 bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl animate-fade-in">
+            <h3 class="text-lg font-semibold text-white mb-4">Market Insights</h3>
+            <div class="space-y-4">
+              <div class="flex items-center space-x-3">
+                <div class="w-2 h-2 bg-primary-green rounded-full"></div>
+                <span class="text-gray-300 text-sm">DeFi TVL up 15% this month</span>
+              </div>
+              <div class="flex items-center space-x-3">
+                <div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                <span class="text-gray-300 text-sm">High volatility expected</span>
+              </div>
+              <div class="flex items-center space-x-3">
+                <div class="w-2 h-2 bg-primary-purple rounded-full"></div>
+                <span class="text-gray-300 text-sm">New farming opportunities</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl animate-fade-in">
+            <h3 class="text-lg font-semibold text-white mb-4">Your Risk Profile</h3>
+            <div class="space-y-3">
+              <div class="flex justify-between">
+                <span class="text-gray-300">Risk Tolerance</span>
+                <span class="text-primary-green">Moderate</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-300">Time Horizon</span>
+                <span class="text-white">Long-term</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-300">Preferred Assets</span>
+                <span class="text-white">ETH, USDC</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 bg-gradient-to-br from-primary-purple/20 to-primary-purple/5 backdrop-blur-sm border border-primary-purple/30 rounded-2xl animate-fade-in">
+            <h3 class="text-lg font-semibold text-white mb-4">🚀 AI Recommendation</h3>
+            <p class="text-gray-300 text-sm mb-4">
+              Consider diversifying into stablecoin farming strategies. Current market conditions favor low-risk, steady yield approaches.
+            </p>
+            <CTAButton variant="purple" size="sm" className="w-full" client:load>
+              Learn More
+            </CTAButton>
+          </div>
+        </div>
+      </div>
+
+      <!-- Performance Metrics -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <CardStat 
+          client:load
+          title="AI Accuracy"
+          value="94.2%"
+          change="+2.1% this month"
+          isPositive={true}
+          gradient="green"
+        />
+        <CardStat 
+          client:load
+          title="Avg. ROI Boost"
+          value="+18.7%"
+          change="vs manual trading"
+          isPositive={true}
+          gradient="purple"
+        />
+        <CardStat 
+          client:load
+          title="Success Rate"
+          value="87.5%"
+          change="of recommendations"
+          isPositive={true}
+          gradient="green"
+        />
+        <CardStat 
+          client:load
+          title="Users Helped"
+          value="12,847"
+          change="+1,205 this week"
+          isPositive={true}
+          gradient="purple"
+        />
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
