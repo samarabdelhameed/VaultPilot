@@ -12,6 +12,17 @@
 - 🧠 **Sentiment Analysis powered by LLM-compatible MCP Agents**
 - 🔀 **Hybrid Strategy blending time and mood dynamics**
 
+```mermaid
+flowchart TD
+  A[User Connects Wallet] --> B[Select Strategy]
+  B --> C[Deploy Vault (Factory)]
+  C --> D[Initialize Strategy (TWAP / Sentiment / Hybrid)]
+  D --> E[Fetch Mood via MCP Agent]
+  E --> F[Execute via 1inch Limit Order]
+  F --> G[Update Vault State]
+  G --> H[Display in Dashboard]
+```
+
 VaultPilot empowers both beginners and pro traders to execute optimized limit orders based on live market “vibes” from social and news platforms, using decentralized onchain execution powered by **1inch Limit Order Protocol**.
 
 ---
@@ -180,18 +191,3 @@ Deliver a **production-ready MVP** for VaultPilot, using:
 - 🖥 Visual dashboards
 
 **Target: 1st place in the $65K 1inch track.**
-
----
-
-## 📈 Flowchart
-
-```mermaid
-flowchart TD
-    A[User Connects Wallet] --> B[Select Strategy]
-    B --> C[Deploy Vault (Factory)]
-    C --> D[Initialize Strategy (TWAP/Sentiment/Hybrid)]
-    D --> E[Fetch Mood via MCP Agent]
-    E --> F[Execute via 1inch Limit Order]
-    F --> G[Update Vault State]
-    G --> H[Display in Dashboard]
-```
