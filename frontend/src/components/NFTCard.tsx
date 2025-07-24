@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 interface NFTCardProps {
   name: string;
@@ -17,11 +17,73 @@ const NFTCard: React.FC<NFTCardProps> = ({
   creator, 
   rarity = 'Common' 
 }) => {
+  const [isPurchasing, setIsPurchasing] = useState(false);
+  const [isViewingDetails, setIsViewingDetails] = useState(false);
+
   const rarityColors = {
     Common: 'text-gray-400 bg-gray-800/30',
     Rare: 'text-blue-400 bg-blue-900/30',
     Epic: 'text-purple-400 bg-purple-900/30',
     Legendary: 'text-yellow-400 bg-yellow-900/30'
+  };
+
+  const handleBuyNow = async () => {
+    setIsPurchasing(true);
+    
+    // Simulate NFT purchase process
+    const purchaseSteps = [
+      'Connecting to wallet...',
+      'Approving transaction...',
+      'Processing payment...',
+      'Transferring NFT ownership...',
+      'Purchase completed!'
+    ];
+
+    for (let i = 0; i < purchaseSteps.length; i++) {
+      await new Promise(resolve => setTimeout(resolve, 800));
+      // In real app, you'd update UI with current step
+    }
+
+    setIsPurchasing(false);
+    
+    // Show success notification
+    showNotification(`Successfully purchased ${name} for ${price} ETH!`, 'success');
+  };
+
+  const handleViewDetails = () => {
+    setIsViewingDetails(true);
+    
+    // Simulate loading vault details
+    setTimeout(() => {
+      setIsViewingDetails(false);
+      // In real app, this would open a modal or navigate to vault details
+      showNotification(`Loading details for ${name}...`, 'info');
+    }, 1000);
+  };
+
+  const showNotification = (message: string, type: 'success' | 'info' | 'error') => {
+    const notification = document.createElement('div');
+    const colors = {
+      success: 'bg-green-500/20 border-green-500/30 text-green-400',
+      info: 'bg-blue-500/20 border-blue-500/30 text-blue-400',
+      error: 'bg-red-500/20 border-red-500/30 text-red-400'
+    };
+    
+    notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg border backdrop-blur-md ${colors[type]} animate-slide-in-right`;
+    notification.innerHTML = `
+      <div class="flex items-center space-x-2">
+        <div class="w-2 h-2 rounded-full bg-current animate-pulse"></div>
+        <span>${message}</span>
+      </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      notification.style.opacity = '0';
+      notification.style.transform = 'translateX(100%)';
+      setTimeout(() => notification.remove(), 300);
+    }, 4000);
   };
 
   return (
@@ -70,11 +132,33 @@ const NFTCard: React.FC<NFTCardProps> = ({
 
         {/* Action Buttons */}
         <div className="flex space-x-3">
-          <button className="flex-1 px-4 py-2 bg-gradient-to-r from-primary-green to-primary-purple text-black font-medium rounded-lg hover:shadow-glow transition-all duration-200 transform hover:scale-105">
-            Buy Now
+          <button
+            className="flex-1 px-4 py-2 bg-gradient-to-r from-primary-green to-primary-purple text-black font-medium rounded-lg hover:shadow-glow transition-all duration-200 transform hover:scale-105"
+            onClick={handleBuyNow}
+            disabled={isPurchasing}
+          >
+            {isPurchasing ? (
+              <>
+                <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
+                <span>Purchasing...</span>
+              </>
+            ) : (
+              <span>Buy Now</span>
+            )}
           </button>
-          <button className="px-4 py-2 bg-gray-800/50 border border-gray-600 text-gray-300 hover:border-primary-green hover:text-primary-green rounded-lg transition-all duration-200">
-            View Details
+          <button 
+            onClick={handleViewDetails}
+            disabled={isPurchasing}
+            className="flex-1 px-4 py-2 bg-gradient-to-r from-primary-green to-primary-purple text-black font-medium rounded-lg hover:shadow-glow transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+          >
+            {isViewingDetails ? (
+              <>
+                <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
+                <span>Loading...</span>
+              </>
+            ) : (
+              <span>View Details</span>
+            )}
           </button>
         </div>
       </div>

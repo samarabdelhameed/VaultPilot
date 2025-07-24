@@ -20,12 +20,39 @@ const VaultForm: React.FC<VaultFormProps> = ({ onSubmit }) => {
     e.preventDefault();
     setIsDeploying(true);
     
-    // Simulate contract deployment
-    setTimeout(() => {
-      setIsDeploying(false);
-      // Redirect to vault dashboard
-      window.location.href = `/vault/demo-vault-${Date.now()}`;
-    }, 3000);
+    // Simulate smart contract deployment process
+    const deploymentSteps = [
+      { step: 'Validating parameters...', duration: 800 },
+      { step: 'Compiling smart contract...', duration: 1200 },
+      { step: 'Deploying to blockchain...', duration: 2000 },
+      { step: 'Initializing vault...', duration: 1000 },
+      { step: 'Setting up AI strategy...', duration: 800 }
+    ];
+
+    let currentStep = 0;
+    const deploymentInterval = setInterval(() => {
+      if (currentStep < deploymentSteps.length) {
+        const stepElement = document.getElementById('deployment-step');
+        if (stepElement) {
+          stepElement.textContent = deploymentSteps[currentStep].step;
+        }
+        currentStep++;
+      } else {
+        clearInterval(deploymentInterval);
+        // Show success and redirect
+        const stepElement = document.getElementById('deployment-step');
+        if (stepElement) {
+          stepElement.textContent = 'Vault deployed successfully!';
+        }
+        
+        setTimeout(() => {
+          setIsDeploying(false);
+          // Generate unique vault ID and redirect
+          const vaultId = `${formData.tradingPair.toLowerCase().replace('/', '-')}-${formData.strategy.toLowerCase()}-vault`;
+          window.location.href = `/vault/${vaultId}`;
+        }, 1500);
+      }
+    }, 1000);
     
     onSubmit?.(formData);
   };
@@ -148,17 +175,35 @@ const VaultForm: React.FC<VaultFormProps> = ({ onSubmit }) => {
           <button
             type="submit"
             disabled={isDeploying}
-            className="w-full px-8 py-4 bg-gradient-to-r from-primary-green to-primary-purple text-black font-semibold rounded-full hover:shadow-glow transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+            className="w-full px-8 py-4 bg-gradient-to-r from-primary-green to-primary-purple text-black font-semibold rounded-full hover:shadow-glow transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center space-x-2"
           >
             {isDeploying ? (
               <>
                 <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
-                <span>Deploying Contract...</span>
+                <div className="flex flex-col items-center">
+                  <span>Deploying Smart Vault...</span>
+                  <span id="deployment-step" className="text-xs opacity-80 mt-1">Initializing...</span>
+                </div>
               </>
             ) : (
               <span>Deploy Smart Vault</span>
             )}
           </button>
+          
+          {isDeploying && (
+            <div className="mt-4 p-4 bg-primary-green/10 border border-primary-green/20 rounded-lg">
+              <div className="flex items-center space-x-2 mb-2">
+                <div className="w-2 h-2 bg-primary-green rounded-full animate-pulse"></div>
+                <span className="text-primary-green font-medium text-sm">Smart Contract Deployment</span>
+              </div>
+              <p className="text-gray-300 text-sm">
+                Your vault is being deployed to the blockchain. This process may take a few moments...
+              </p>
+              <div className="mt-2 bg-gray-700 rounded-full h-2">
+                <div className="bg-gradient-to-r from-primary-green to-primary-purple h-2 rounded-full animate-pulse" style={{width: '60%'}}></div>
+              </div>
+            </div>
+          )}
         </div>
       </form>
     </div>

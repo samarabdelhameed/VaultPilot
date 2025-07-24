@@ -93,9 +93,12 @@ const VaultCard: React.FC<VaultCardProps> = ({
         </div>
 
         {/* Action Button */}
-        <button className="w-full px-4 py-2 bg-gradient-to-r from-primary-green/20 to-primary-purple/20 hover:from-primary-green/30 hover:to-primary-purple/30 border border-white/20 text-white rounded-lg transition-all duration-200 transform hover:scale-105">
+        <a 
+          href={`/vault/${id.toLowerCase().replace(/\s+/g, '-')}`}
+          className="block w-full px-4 py-2 bg-gradient-to-r from-primary-green/20 to-primary-purple/20 hover:from-primary-green/30 hover:to-primary-purple/30 border border-white/20 text-white rounded-lg transition-all duration-200 transform hover:scale-105 text-center"
+        >
           View Dashboard
-        </button>
+        </a>
       </div>
     </div>
   );
