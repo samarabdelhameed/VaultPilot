@@ -19,6 +19,7 @@
   "license": "ISC",
   "description": "🧠 backend/ — Professional Technical Analysis This layer is the brain of VaultPilot. It connects frontend ↔️ smart contracts ↔️ AI agents and price oracles. It contains business logic, routing, agent triggering, and price tracking.",
   "dependencies": {
+    "@1inch/limit-order-protocol": "^2.0.5",
     "@1inch/limit-order-protocol-utils": "^4.0.1",
     "@types/cors": "^2.8.19",
     "cors": "^2.8.5",

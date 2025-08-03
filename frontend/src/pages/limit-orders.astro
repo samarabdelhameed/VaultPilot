@@ -1,0 +1,498 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import CardStat from "../components/CardStat";
+import CTAButton from "../components/CTAButton";
+---
+
+<Layout title="Limit Orders - VaultPilot">
+  <Navbar />
+
+  <main class="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <!-- Header -->
+      <div
+        class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 animate-fade-in"
+      >
+        <div>
+          <h1 class="text-4xl font-bold text-white mb-4">
+            <span
+              class="bg-gradient-to-r from-primary-green to-primary-purple bg-clip-text text-transparent"
+              >Limit Orders</span
+            >
+          </h1>
+          <p class="text-xl text-gray-300">
+            Advanced limit order management with real-time execution
+          </p>
+        </div>
+        <div class="mt-6 lg:mt-0">
+          <CTAButton variant="green" href="/1inch-orders" client:load>
+            <span>1inch Orders</span>
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+            </svg>
+          </CTAButton>
+        </div>
+      </div>
+
+      <!-- Order Statistics -->
+      <div
+        class="mb-12 p-6 bg-glass-gradient backdrop-blur-md border border-white/20 rounded-2xl shadow-glass animate-fade-in"
+      >
+        <h2 class="text-2xl font-bold text-white mb-6">Order Statistics</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+          <div class="bg-white/10 p-4 rounded-lg">
+            <h3 class="text-sm font-medium text-gray-400 mb-2">Total Orders</h3>
+            <p class="text-primary-green font-semibold text-xl" id="total-orders">
+              Loading...
+            </p>
+          </div>
+          <div class="bg-white/10 p-4 rounded-lg">
+            <h3 class="text-sm font-medium text-gray-400 mb-2">Active Orders</h3>
+            <p class="text-primary-purple font-semibold text-xl" id="active-orders">
+              Loading...
+            </p>
+          </div>
+          <div class="bg-white/10 p-4 rounded-lg">
+            <h3 class="text-sm font-medium text-gray-400 mb-2">Filled Orders</h3>
+            <p class="text-green-400 font-semibold text-xl" id="filled-orders">
+              Loading...
+            </p>
+          </div>
+          <div class="bg-white/10 p-4 rounded-lg">
+            <h3 class="text-sm font-medium text-gray-400 mb-2">Cancelled Orders</h3>
+            <p class="text-red-400 font-semibold text-xl" id="cancelled-orders">
+              Loading...
+            </p>
+          </div>
+          <div class="bg-white/10 p-4 rounded-lg">
+            <h3 class="text-sm font-medium text-gray-400 mb-2">Total Volume</h3>
+            <p class="text-primary-green font-semibold text-xl" id="total-volume">
+              Loading...
+            </p>
+          </div>
+        </div>
+        
+        <button 
+          id="refresh-stats-btn"
+          class="mt-6 px-6 py-3 bg-gradient-to-r from-primary-green to-primary-purple text-black font-medium rounded-lg hover:shadow-glow transition-all duration-200"
+        >
+          Refresh Statistics
+        </button>
+      </div>
+
+      <!-- Create Order Section -->
+      <div
+        class="mb-12 p-6 bg-glass-gradient backdrop-blur-md border border-white/20 rounded-2xl shadow-glass animate-fade-in"
+      >
+        <h2 class="text-2xl font-bold text-primary-green mb-6">Create Limit Order</h2>
+        
+        <form id="create-order-form" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Maker Asset (Token Address)</label>
+            <input 
+              type="text" 
+              id="maker-asset"
+              placeholder="0x..."
+              class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-green"
+            />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Taker Asset (Token Address)</label>
+            <input 
+              type="text" 
+              id="taker-asset"
+              placeholder="0x..."
+              class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-green"
+            />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Maker Amount</label>
+            <input 
+              type="text" 
+              id="maker-amount"
+              placeholder="1000000000000000000"
+              class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-green"
+            />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Taker Amount</label>
+            <input 
+              type="text" 
+              id="taker-amount"
+              placeholder="1000000000000000000"
+              class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-green"
+            />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Expiration (Unix Timestamp)</label>
+            <input 
+              type="number" 
+              id="expiration"
+              placeholder="1754199444"
+              class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-green"
+            />
+          </div>
+          
+          <div class="flex items-end">
+            <button 
+              type="submit"
+              class="w-full px-6 py-3 bg-gradient-to-r from-primary-green to-primary-purple text-black font-medium rounded-lg hover:shadow-glow transition-all duration-200"
+            >
+              Create Order
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- My Orders Section -->
+      <div
+        class="mb-12 p-6 bg-glass-gradient backdrop-blur-md border border-white/20 rounded-2xl shadow-glass animate-fade-in"
+      >
+        <h2 class="text-2xl font-bold text-primary-purple mb-6">My Orders</h2>
+        
+        <div id="my-orders" class="space-y-4">
+          <div class="text-center text-gray-400">
+            Loading your orders...
+          </div>
+        </div>
+        
+        <button 
+          id="refresh-orders-btn"
+          class="mt-6 px-6 py-3 bg-gradient-to-r from-primary-purple to-primary-green text-black font-medium rounded-lg hover:shadow-glow transition-all duration-200"
+        >
+          Refresh Orders
+        </button>
+      </div>
+
+      <!-- Order Actions Section -->
+      <div
+        class="mb-12 p-6 bg-glass-gradient backdrop-blur-md border border-white/20 rounded-2xl shadow-glass animate-fade-in"
+      >
+        <h2 class="text-2xl font-bold text-primary-green mb-6">Order Actions</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Fill Order -->
+          <div class="bg-white/10 p-6 rounded-lg">
+            <h3 class="text-lg font-bold text-primary-green mb-4">Fill Order</h3>
+            
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-400 mb-2">Order Hash</label>
+                <input 
+                  type="text" 
+                  id="fill-order-hash"
+                  placeholder="0x..."
+                  class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-green"
+                />
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-400 mb-2">Signature</label>
+                <input 
+                  type="text" 
+                  id="fill-signature"
+                  placeholder="0x..."
+                  class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-green"
+                />
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-400 mb-2">Interaction</label>
+                <input 
+                  type="text" 
+                  id="fill-interaction"
+                  placeholder="0x..."
+                  class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-green"
+                />
+              </div>
+              
+              <button 
+                id="fill-order-btn"
+                class="w-full px-6 py-3 bg-gradient-to-r from-primary-green to-primary-purple text-black font-medium rounded-lg hover:shadow-glow transition-all duration-200"
+              >
+                Fill Order
+              </button>
+            </div>
+          </div>
+
+          <!-- Cancel Order -->
+          <div class="bg-white/10 p-6 rounded-lg">
+            <h3 class="text-lg font-bold text-primary-purple mb-4">Cancel Order</h3>
+            
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-400 mb-2">Order Hash</label>
+                <input 
+                  type="text" 
+                  id="cancel-order-hash"
+                  placeholder="0x..."
+                  class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-purple"
+                />
+              </div>
+              
+              <button 
+                id="cancel-order-btn"
+                class="w-full px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-all duration-200"
+              >
+                Cancel Order
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Status Messages -->
+      <div id="status-messages" class="space-y-4">
+        <!-- Status messages will be displayed here -->
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+  const API_BASE_URL = "http://localhost:3001";
+  
+  // Load initial data
+  document.addEventListener('DOMContentLoaded', function() {
+    loadOrderStats();
+    loadMyOrders();
+  });
+  
+  // Load order statistics
+  async function loadOrderStats() {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/limit-orders/stats`);
+      const data = await response.json();
+      
+      if (data.success) {
+        document.getElementById('total-orders').textContent = data.data.totalOrders;
+        document.getElementById('active-orders').textContent = data.data.activeOrders;
+        document.getElementById('filled-orders').textContent = data.data.filledOrders;
+        document.getElementById('cancelled-orders').textContent = data.data.cancelledOrders;
+        document.getElementById('total-volume').textContent = formatEther(data.data.totalVolume);
+      } else {
+        showStatusMessage('Error loading order statistics', 'error');
+      }
+    } catch (error) {
+      console.error('Error loading order stats:', error);
+      showStatusMessage('Failed to load order statistics', 'error');
+    }
+  }
+  
+  // Load my orders
+  async function loadMyOrders() {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/limit-orders/user/0xF26f945C1e73278157c24C1dCBb8A19227547D29`);
+      const data = await response.json();
+      
+      const ordersDiv = document.getElementById('my-orders');
+      
+      if (data.success && data.data.length > 0) {
+        ordersDiv.innerHTML = '';
+        
+        data.data.forEach(order => {
+          const orderElement = createOrderElement(order);
+          ordersDiv.appendChild(orderElement);
+        });
+      } else {
+        ordersDiv.innerHTML = '<div class="text-center text-gray-400">No orders found</div>';
+      }
+    } catch (error) {
+      console.error('Error loading my orders:', error);
+      showStatusMessage('Failed to load orders', 'error');
+    }
+  }
+  
+  // Create order element
+  function createOrderElement(order) {
+    const div = document.createElement('div');
+    div.className = 'bg-white/10 border border-white/20 rounded-lg p-4';
+    
+    const status = order.isActive ? 'Active' : order.isFilled ? 'Filled' : 'Cancelled';
+    const statusColor = order.isActive ? 'text-green-400' : order.isFilled ? 'text-blue-400' : 'text-red-400';
+    
+    div.innerHTML = `
+      <div class="flex justify-between items-start">
+        <div class="flex-1">
+          <h3 class="font-bold text-primary-green">Order Hash</h3>
+          <p class="text-sm text-gray-400 break-all">${order.orderHash}</p>
+          <div class="mt-2 grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <span class="text-gray-400">Maker Asset:</span>
+              <span class="text-white">${order.makerAsset}</span>
+            </div>
+            <div>
+              <span class="text-gray-400">Taker Asset:</span>
+              <span class="text-white">${order.takerAsset}</span>
+            </div>
+            <div>
+              <span class="text-gray-400">Maker Amount:</span>
+              <span class="text-white">${formatEther(order.makerAmount)}</span>
+            </div>
+            <div>
+              <span class="text-gray-400">Taker Amount:</span>
+              <span class="text-white">${formatEther(order.takerAmount)}</span>
+            </div>
+          </div>
+        </div>
+        <div class="text-right">
+          <span class="px-2 py-1 bg-white/10 text-xs rounded ${statusColor}">${status}</span>
+        </div>
+      </div>
+    `;
+    
+    return div;
+  }
+  
+  // Create order form
+  document.getElementById('create-order-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = {
+      makerAsset: document.getElementById('maker-asset').value,
+      takerAsset: document.getElementById('taker-asset').value,
+      makerAmount: document.getElementById('maker-amount').value,
+      takerAmount: document.getElementById('taker-amount').value,
+      expiration: parseInt(document.getElementById('expiration').value)
+    };
+    
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/limit-orders/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        showStatusMessage(`Order created successfully! Hash: ${data.data.orderHash}`, 'success');
+        loadMyOrders();
+        loadOrderStats();
+      } else {
+        showStatusMessage(`Error: ${data.error}`, 'error');
+      }
+    } catch (error) {
+      console.error('Error creating order:', error);
+      showStatusMessage('Failed to create order', 'error');
+    }
+  });
+  
+  // Fill order
+  document.getElementById('fill-order-btn').addEventListener('click', async () => {
+    const orderHash = document.getElementById('fill-order-hash').value;
+    const signature = document.getElementById('fill-signature').value;
+    const interaction = document.getElementById('fill-interaction').value;
+    
+    if (!orderHash || !signature || !interaction) {
+      showStatusMessage('Please fill all fields', 'error');
+      return;
+    }
+    
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/limit-orders/fill`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ orderHash, signature, interaction }),
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        showStatusMessage(`Order filled successfully! TX: ${data.data.transactionHash}`, 'success');
+        loadMyOrders();
+        loadOrderStats();
+      } else {
+        showStatusMessage(`Error: ${data.error}`, 'error');
+      }
+    } catch (error) {
+      console.error('Error filling order:', error);
+      showStatusMessage('Failed to fill order', 'error');
+    }
+  });
+  
+  // Cancel order
+  document.getElementById('cancel-order-btn').addEventListener('click', async () => {
+    const orderHash = document.getElementById('cancel-order-hash').value;
+    
+    if (!orderHash) {
+      showStatusMessage('Please enter order hash', 'error');
+      return;
+    }
+    
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/limit-orders/cancel`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ orderHash }),
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        showStatusMessage(`Order cancelled successfully! TX: ${data.data.transactionHash}`, 'success');
+        loadMyOrders();
+        loadOrderStats();
+      } else {
+        showStatusMessage(`Error: ${data.error}`, 'error');
+      }
+    } catch (error) {
+      console.error('Error cancelling order:', error);
+      showStatusMessage('Failed to cancel order', 'error');
+    }
+  });
+  
+  // Refresh buttons
+  document.getElementById('refresh-stats-btn').addEventListener('click', loadOrderStats);
+  document.getElementById('refresh-orders-btn').addEventListener('click', loadMyOrders);
+  
+  // Helper functions
+  function formatEther(wei) {
+    return (parseInt(wei) / 1e18).toFixed(6);
+  }
+  
+  function showStatusMessage(message, type) {
+    const statusDiv = document.getElementById('status-messages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `p-4 rounded-lg ${
+      type === 'success' 
+        ? 'bg-green-500/20 border border-green-500/30 text-green-400' 
+        : 'bg-red-500/20 border border-red-500/30 text-red-400'
+    }`;
+    messageDiv.textContent = message;
+    
+    statusDiv.appendChild(messageDiv);
+    
+    // Remove message after 5 seconds
+    setTimeout(() => {
+      messageDiv.remove();
+    }, 5000);
+  }
+  
+  // Set default expiration time (1 hour from now)
+  const defaultExpiration = Math.floor(Date.now() / 1000) + 3600;
+  document.getElementById('expiration').value = defaultExpiration;
+</script> 

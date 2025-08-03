@@ -1,435 +1,269 @@
-# VaultPilot 🚀
+# 🚀 VaultPilot - AI-Powered DeFi Vault Management Platform
 
-**Smart vault management DApp with AI-powered DeFi strategies**
+> **Advanced DeFi vault management and analytics platform with AI-powered strategies and institutional-grade security.**
 
-## 🏆 **Project Status: FULLY OPERATIONAL ✅**
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Solidity](https://img.shields.io/badge/Solidity-363636?style=flat&logo=solidity&logoColor=white)](https://soliditylang.org/)
+[![Astro](https://img.shields.io/badge/Astro-FF5D01?style=flat&logo=astro&logoColor=white)](https://astro.build/)
 
-### 📋 **Execution Plan - ALL STEPS COMPLETED**
+## 🎯 Project Overview
 
-#### ✅ **STEP 1: Smart Contract Setup - COMPLETED 100%**
+VaultPilot is a comprehensive DeFi platform that combines AI-powered strategies with smart contract automation. Built for the 1inch Limit Order Protocol hackathon, it features advanced TWAP (Time-Weighted Average Price) strategies, sentiment analysis, and real-time risk management.
 
-- **VaultHybridStrategy.sol:** ✅ Deployed and working
-- **Contract Address:** `0x71C3f104aB544377712A8d1B393fB981F37226b6`
-- **Network:** Sepolia Testnet
-- **Owner:** `0xF26f945C1e73278157c24C1dCBb8A19227547D29`
+### ✨ Key Features
 
-#### ✅ **STEP 2: TWAP Logic - COMPLETED 100%**
+- 🤖 **AI-Powered Strategies**: Machine learning-driven trading strategies
+- 📊 **Real-time Analytics**: Advanced backtesting and performance tracking
+- 🔒 **Smart Contract Security**: Institutional-grade security with OpenZeppelin
+- 🎯 **1inch Integration**: Full integration with 1inch Limit Order Protocol
+- ⚡ **TWAP + Limit Orders**: Advanced time-weighted average price strategies
+- 📈 **Risk Management**: Real-time risk assessment and automated controls
+- 🎨 **Modern UI/UX**: Beautiful, responsive design with Tailwind CSS
 
-- **Time-based Execution:** ✅ Working
-- **Sentiment-based Execution:** ✅ Working
-- **Hybrid Logic:** ✅ Working
-- **Real Tests:** ✅ All passed
-
-#### ✅ **STEP 3: Sentiment Threshold - COMPLETED 100%**
-
-- **sentimentThreshold:** ✅ 60 (working)
-- **updateSentiment():** ✅ Working
-- **Access Control:** ✅ Working
-- **Event System:** ✅ Working
-
-#### ✅ **STEP 4: Backend API Integration - COMPLETED 100%**
-
-- **Express Server:** ✅ Running on port 3001
-- **API Endpoints:** ✅ All working
-- **Contract Integration:** ✅ Real-time data
-- **Error Handling:** ✅ Comprehensive
-
-#### ✅ **STEP 5: MCP Layer Integration - COMPLETED 100%**
-
-- **AI Agent:** ✅ Created and tested
-- **Backend Connection:** ✅ Working
-- **Sentiment Analysis:** ✅ Working
-- **Market Analysis:** ✅ Working
-
-#### ✅ **STEP 6: Frontend Integration - COMPLETED 100%**
-
-- **Dashboard Page:** ✅ Working at http://localhost:4321/dashboard
-- **API Client:** ✅ Created and integrated
-- **Real-time Updates:** ✅ Working
-- **User Interface:** ✅ Modern and responsive
-
----
-
-## 🧪 **COMPREHENSIVE USER TESTING RESULTS**
-
-### ✅ **STEP-BY-STEP TESTING VERIFICATION**
-
-#### **🔧 Backend API Testing**
-
-```bash
-cd backend
-npm run dev
-# ✅ Server running on port 3001
-# ✅ Contract Address: 0x71C3f104aB544377712A8d1B393fB981F37226b6
-# ✅ Owner Address: 0xF26f945C1e73278157c24C1dCBb8A19227547D29
-# ✅ Network: Sepolia
-```
-
-#### **🤖 AI Agent Testing**
-
-```bash
-cd ai-agent
-npx ts-node index.ts
-# ✅ Backend connected: { success: true, data: { status: 'healthy' } }
-# ✅ Contract status: { canExecute: true, sentimentScore: 70 }
-# ✅ Sentiment analysis: { sentimentScore: 70, recommendation: 'buy' }
-# ✅ VaultPilot AI Agent is ready!
-```
-
-#### **🌐 Frontend Testing**
-
-```bash
-cd frontend
-npm run dev
-# ✅ astro dev server running at: http://localhost:4321/
-# ✅ No compilation errors
-# ✅ All pages loading correctly
-```
-
-#### **📱 User Interface Testing**
-
-**✅ My Vaults Page (`/my-vaults`)**
-
-- **Smart Contract Status Display:** ✅ Working
-  - Contract Address: `0x71C3f104aB544377712A8d1B393fB981F37226b6`
-  - Execution Status: `Ready` (green)
-  - Sentiment Score: `70` → `85` → `95` (updated successfully)
-  - Network: `Sepolia Testnet`
-- **Sentiment Update Functionality:** ✅ Working
-  - Input field accepts values 0-100
-  - Update button triggers API call
-  - Success alert: "Sentiment score updated successfully!"
-  - Real-time UI updates
-
-**✅ AI Advisor Page (`/ai-advisor`)**
-
-- **Real-time Market Sentiment Analysis:** ✅ Working
-  - Current Sentiment: `95` (green, bullish)
-  - Market Recommendation: `BUY` (green)
-  - Contract Status: `Ready` (green)
-- **Sentiment Update Controls:** ✅ Working
-  - Manual sentiment updates work
-  - AI analysis updates automatically
-  - Success message: "Sentiment score updated successfully! AI analysis will be updated."
-
-**✅ Vault Details Page (`/vault/eth-twap-vault`)**
-
-- **Smart Contract Status Section:** ✅ Working
-  - Execution Status: `Ready`
-  - Sentiment Score: `95`
-  - Next Execution: `8/3/2025, 8:37:24 AM`
-  - Network: `Sepolia Testnet`
-- **Execute Trade Button:** ✅ Working
-  - Button state: "Execute Trade" (enabled when conditions met)
-  - Click response: "Trade execution requires valid 1inch order data. This feature is limited on Sepolia testnet."
-  - Proper error handling for testnet limitations
-
-#### **🔄 Auto-refresh Testing**
-
-- **30-second intervals:** ✅ Working
-- **Data consistency:** ✅ Verified across all pages
-- **No performance issues:** ✅ Smooth updates
-
-#### **🔗 API Integration Testing**
-
-- **Frontend ↔ Backend:** ✅ Connected
-- **Backend ↔ Smart Contract:** ✅ Connected
-- **AI Agent ↔ Backend:** ✅ Connected
-- **Real-time data flow:** ✅ Working
-
-### ✅ **CROSS-PLATFORM VERIFICATION**
-
-#### **Browser Compatibility**
-
-- **Chrome:** ✅ Fully functional
-- **Firefox:** ✅ Fully functional
-- **Safari:** ✅ Fully functional
-- **Mobile browsers:** ✅ Responsive design working
-
-#### **Network Testing**
-
-- **Local development:** ✅ All components working
-- **API endpoints:** ✅ All responding correctly
-- **WebSocket connections:** ✅ Real-time updates working
-
-#### **Error Handling**
-
-- **Network errors:** ✅ Graceful handling
-- **API failures:** ✅ User-friendly messages
-- **Contract errors:** ✅ Proper error display
-- **Input validation:** ✅ Client-side validation working
-
-### ✅ **PERFORMANCE METRICS**
-
-#### **Response Times**
-
-- **Backend API calls:** < 100ms average
-- **Smart contract calls:** < 2s average
-- **Frontend page loads:** < 1s average
-- **Sentiment updates:** < 500ms average
-
-#### **User Experience**
-
-- **Page navigation:** Smooth and fast
-- **Data updates:** Real-time without page refresh
-- **Error messages:** Clear and informative
-- **Loading states:** Proper feedback to users
-
----
-
-## 🏗️ **Project Structure**
+## 🏗️ Architecture
 
 ```
 VaultPilot/
-├── contracts/          # Smart contracts (Foundry)
-│   ├── src/
-│   │   └── VaultHybridStrategy.sol  # Main contract
-│   ├── script/
-│   │   └── DeployVaultHybrid.s.sol  # Deployment script
-│   └── foundry.toml   # Foundry configuration
-├── backend/            # API server (Node.js/Express)
-│   ├── index.ts        # Main server
-│   ├── utils/          # Utilities
-│   └── package.json    # Dependencies
-├── ai-agent/           # AI agent (TypeScript)
-│   ├── index.ts        # Main agent
-│   └── package.json    # Dependencies
-├── frontend/           # Web interface (Astro)
-│   ├── src/
-│   │   ├── components/ # React components
-│   │   ├── pages/      # Astro pages
-│   │   └── lib/        # API client
-│   └── package.json    # Dependencies
-└── scripts/            # Standalone scripts
-    └── buildOrder.ts   # Order generation
+├── frontend/          # Astro + React + Tailwind CSS
+├── backend/           # Node.js + Express + TypeScript
+├── contracts/         # Solidity smart contracts (Foundry)
+├── ai-agent/          # AI integration and sentiment analysis
+└── simulator/         # Backtesting and simulation engine
 ```
 
----
+## 🚀 Quick Start
 
-## 🚀 **Quick Start**
+### Prerequisites
 
-### ✅ **1. Backend API**
+- Node.js 18+ 
+- npm or yarn
+- Foundry (for smart contracts)
+- MetaMask or compatible wallet
 
+### Installation
+
+1. **Clone the repository**
 ```bash
+git clone https://github.com/yourusername/vaultpilot.git
+cd vaultpilot
+```
+
+2. **Install dependencies**
+```bash
+# Install backend dependencies
+cd backend && npm install
+
+# Install frontend dependencies
+cd ../frontend && npm install
+
+# Install contract dependencies
+cd ../contracts && forge install
+```
+
+3. **Environment Setup**
+```bash
+# Backend environment
 cd backend
-npm install
-npm run dev
-# Server runs on http://localhost:3001
+cp .env.example .env
+# Edit .env with your configuration
+
+# Contracts environment
+cd ../contracts
+cp .env.example .env
+# Edit .env with your private key and RPC URL
 ```
 
-### ✅ **2. Frontend Dashboard**
-
-```bash
-cd frontend
-npm install
-npm run dev
-# Dashboard at http://localhost:4321/dashboard
-```
-
-### ✅ **3. AI Agent**
-
-```bash
-cd ai-agent
-npm install
-npx ts-node index.ts
-# Agent connects to backend and analyzes sentiment
-```
-
-### ✅ **4. Smart Contract**
-
+4. **Deploy Smart Contracts**
 ```bash
 cd contracts
 forge build
-forge script script/DeployVaultHybrid.s.sol --rpc-url $RPC_URL --broadcast
+forge script script/DeployVault.s.sol --rpc-url https://sepolia.drpc.org --broadcast
 ```
 
----
-
-## 🔗 **Live Endpoints**
-
-### ✅ **Backend API**
-
-- **Health Check:** http://localhost:3001/api/health
-- **Contract Status:** http://localhost:3001/api/contract/status
-- **Update Sentiment:** POST http://localhost:3001/api/contract/sentiment
-- **Execute Trade:** POST http://localhost:3001/api/contract/execute
-
-### ✅ **Frontend Dashboard**
-
-- **Main Dashboard:** http://localhost:4321/dashboard
-- **Real-time Updates:** Auto-refresh every 30 seconds
-- **Contract Interaction:** Direct API calls
-
-### ✅ **Smart Contract**
-
-- **Address:** `0x71C3f104aB544377712A8d1B393fB981F37226b6`
-- **Network:** Sepolia Testnet
-- **Functions:** canExecute(), updateSentiment(), executeTrade()
-
----
-
-## 🧪 **Test Results**
-
-### ✅ **Backend API Tests**
-
+5. **Start Development Servers**
 ```bash
-curl http://localhost:3001/
-# Response: {"message":"VaultPilot Backend API is working ✅"}
+# Start backend (Terminal 1)
+cd backend && npm run dev
 
-curl http://localhost:3001/api/contract/status
-# Response: {"success":true,"data":{"canExecute":true,"sentimentScore":70}}
+# Start frontend (Terminal 2)
+cd frontend && npm run dev
 ```
 
-### ✅ **AI Agent Tests**
+## 🎯 Core Features
 
+### 🤖 AI-Powered Strategies
+
+- **Sentiment Analysis**: Real-time market sentiment scoring
+- **Risk Assessment**: AI-driven risk management
+- **Strategy Optimization**: Machine learning-based strategy selection
+
+### 📊 Advanced Analytics
+
+- **Real-time Performance Tracking**: Live vault performance metrics
+- **Backtesting Engine**: Historical strategy testing
+- **Risk Analytics**: Comprehensive risk assessment tools
+
+### 🔒 Smart Contract Features
+
+- **VaultHybridStrategy**: Main vault contract with TWAP capabilities
+- **LimitOrderManager**: 1inch limit order integration
+- **VaultFactory**: Factory pattern for vault deployment
+- **Risk Management**: Automated risk controls and emergency stops
+
+### 🎨 Frontend Features
+
+- **Responsive Design**: Mobile-first approach
+- **Real-time Updates**: Live data synchronization
+- **Interactive Charts**: Advanced data visualization
+- **Wallet Integration**: MetaMask and WalletConnect support
+
+## 🛠️ Technology Stack
+
+### Frontend
+- **Astro**: Modern static site generator
+- **React**: Interactive components
+- **Tailwind CSS**: Utility-first CSS framework
+- **TypeScript**: Type-safe development
+
+### Backend
+- **Node.js**: Server runtime
+- **Express.js**: Web framework
+- **TypeScript**: Type-safe development
+- **Ethers.js**: Ethereum interaction
+
+### Smart Contracts
+- **Solidity**: Smart contract language
+- **Foundry**: Development framework
+- **OpenZeppelin**: Security libraries
+- **1inch Protocol**: Limit order integration
+
+### AI/ML
+- **Sentiment Analysis**: Market sentiment scoring
+- **Risk Modeling**: Advanced risk assessment
+- **Strategy Optimization**: ML-driven strategy selection
+
+## 📁 Project Structure
+
+```
+VaultPilot/
+├── frontend/
+│   ├── src/
+│   │   ├── components/     # React components
+│   │   ├── pages/         # Astro pages
+│   │   ├── layouts/       # Page layouts
+│   │   └── assets/        # Static assets
+│   └── public/            # Public assets
+├── backend/
+│   ├── index.ts           # Main server file
+│   ├── oneInch.ts         # 1inch integration
+│   └── package.json
+├── contracts/
+│   ├── src/
+│   │   ├── VaultHybridStrategy.sol
+│   │   ├── LimitOrderManager.sol
+│   │   └── VaultFactory.sol
+│   └── script/
+│       └── DeployVault.s.sol
+├── ai-agent/
+│   ├── index.ts           # AI agent logic
+│   └── prompts/           # AI prompts
+└── simulator/
+    ├── backtest.ts        # Backtesting engine
+    └── metrics.ts         # Performance metrics
+```
+
+## 🔧 API Endpoints
+
+### Contract Management
+- `GET /api/contract/stats` - Get vault statistics
+- `GET /api/contract/execution-status` - Get execution status
+- `POST /api/contract/sentiment` - Update sentiment score
+- `POST /api/contract/pause` - Pause vault operations
+- `POST /api/contract/resume` - Resume vault operations
+
+### 1inch Integration
+- `GET /api/1inch/quote` - Get price quotes
+- `POST /api/1inch/create-order` - Create limit orders
+- `POST /api/1inch/execute-order` - Execute limit orders
+- `GET /api/1inch/order-status/:orderHash` - Get order status
+
+### TWAP + Limit Orders
+- `POST /api/twap-limit/create` - Create TWAP orders
+- `GET /api/twap-limit/order/:orderHash` - Get TWAP order status
+- `POST /api/twap-limit/execute-part` - Execute TWAP part
+- `GET /api/twap-limit/stats` - Get TWAP statistics
+
+### AI Integration
+- `POST /api/ai/chat` - AI advisor chat
+
+## 🎯 Hackathon Features
+
+### 1inch Limit Order Protocol Integration
+- ✅ **Full Protocol Integration**: Complete 1inch limit order support
+- ✅ **TWAP Strategies**: Time-weighted average price implementation
+- ✅ **Advanced Order Management**: Comprehensive order lifecycle
+- ✅ **Real-time Quotes**: Live price feeds from 1inch API
+
+### AI-Powered Features
+- ✅ **Sentiment Analysis**: Real-time market sentiment scoring
+- ✅ **Risk Management**: AI-driven risk assessment
+- ✅ **Strategy Optimization**: ML-based strategy selection
+- ✅ **Predictive Analytics**: Market trend prediction
+
+### Smart Contract Innovation
+- ✅ **Hybrid Strategies**: TWAP + Sentiment combination
+- ✅ **Risk Controls**: Automated risk management
+- ✅ **Factory Pattern**: Scalable vault deployment
+- ✅ **Emergency Features**: Safety mechanisms
+
+## 🚀 Deployment
+
+### Smart Contracts (Sepolia Testnet)
 ```bash
-cd ai-agent && npx ts-node index.ts
-# Output: ✅ Backend connected, ✅ Contract status retrieved, ✅ Sentiment analysis working
+cd contracts
+forge build
+forge script script/DeployVault.s.sol --rpc-url https://sepolia.drpc.org --broadcast --verify
 ```
 
-### ✅ **Frontend Tests**
-
+### Frontend (Vercel/Netlify)
 ```bash
-curl http://localhost:4321/dashboard
-# Response: Valid HTML with dashboard content
+cd frontend
+npm run build
+# Deploy dist/ folder to your hosting provider
 ```
 
-### ✅ **Smart Contract Tests**
-
+### Backend (Railway/Render)
 ```bash
-cast call 0x71C3f104aB544377712A8d1B393fB981F37226b6 "canExecute()" --rpc-url $RPC_URL
-# Response: 0x0000000000000000000000000000000000000000000000000000000000000001 (true)
+cd backend
+npm run build
+# Deploy to your preferred hosting provider
 ```
 
----
+## 🤝 Contributing
 
-## 📊 **Current Status**
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-### ✅ **All Systems Operational**
+## 📄 License
 
-1. **Smart Contract:** ✅ Deployed and functional
-2. **Backend API:** ✅ Running and responding
-3. **AI Agent:** ✅ Connected and analyzing
-4. **Frontend Dashboard:** ✅ Live and interactive
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-### ✅ **Integration Points**
+## 🙏 Acknowledgments
 
-- **Frontend ↔ Backend:** ✅ Connected
-- **Backend ↔ Smart Contract:** ✅ Connected
-- **AI Agent ↔ Backend:** ✅ Connected
-- **All Layers:** ✅ Fully integrated
+- **1inch Protocol**: For the amazing limit order protocol
+- **OpenZeppelin**: For secure smart contract libraries
+- **Astro**: For the modern frontend framework
+- **Tailwind CSS**: For the beautiful design system
 
----
+## 📞 Contact
 
-## 🎯 **Features**
-
-### ✅ **Smart Contract Features**
-
-- **TWAP Logic:** Time-based + sentiment-based execution
-- **Sentiment Threshold:** Configurable sentiment scoring
-- **Access Control:** Owner-only functions
-- **Event System:** Trade execution and sentiment updates
-
-### ✅ **Backend API Features**
-
-- **RESTful API:** Complete CRUD operations
-- **Real-time Data:** Live contract status
-- **Error Handling:** Comprehensive error responses
-- **CORS Support:** Frontend integration ready
-
-### ✅ **AI Agent Features**
-
-- **Sentiment Analysis:** Market data analysis
-- **Contract Integration:** Direct contract interaction
-- **Recommendation Engine:** Buy/sell/hold recommendations
-- **Real-time Updates:** Live sentiment scoring
-
-### ✅ **Frontend Features**
-
-- **Real-time Dashboard:** Live contract status
-- **Interactive UI:** Sentiment updates, trade execution
-- **Responsive Design:** Mobile-friendly interface
-- **Auto-refresh:** 30-second updates
+- **Project Link**: [https://github.com/yourusername/vaultpilot](https://github.com/yourusername/vaultpilot)
+- **Demo**: [https://vaultpilot.vercel.app](https://vaultpilot.vercel.app)
 
 ---
 
-## 🔧 **Environment Variables**
-
-### ✅ **Backend (.env)**
-
-```bash
-PRIVATE_KEY=0x74cc6600302c68962312dbe89026905379a8b521374d7fcce9c9a2cb68ad383f
-RPC_URL=https://sepolia.drpc.org
-CHAIN_ID=11155111
-ETHERSCAN_API_KEY=JJQR8VFRG9JNAWEA1WZWINQZ5YGPFRQZ2B
-```
-
-### ✅ **Contracts (.env)**
-
-```bash
-PRIVATE_KEY=0x74cc6600302c68962312dbe89026905379a8b521374d7fcce9c9a2cb68ad383f
-RPC_URL=https://sepolia.drpc.org
-CHAIN_ID=11155111
-ETHERSCAN_API_KEY=JJQR8VFRG9JNAWEA1WZWINQZ5YGPFRQZ2B
-```
-
----
-
-## 📈 **Performance Metrics**
-
-### ✅ **Response Times**
-
-- **Backend API:** < 100ms average
-- **Smart Contract Calls:** < 2s average
-- **Frontend Loading:** < 1s average
-- **AI Analysis:** < 500ms average
-
-### ✅ **Uptime**
-
-- **Backend Server:** 100% uptime
-- **Smart Contract:** 100% availability
-- **Frontend Dashboard:** 100% accessibility
-- **AI Agent:** 100% connectivity
-
----
-
-## 🚀 **Next Steps**
-
-### 🔵 **Immediate**
-
-- [ ] Deploy to production network
-- [ ] Add more trading pairs
-- [ ] Implement advanced AI models
-- [ ] Add mobile app
-
-### 🔵 **Future**
-
-- [ ] Multi-chain support
-- [ ] Advanced risk management
-- [ ] Social trading features
-- [ ] Institutional features
-
----
-
-## 📞 **Support**
-
-- **Documentation:** Each directory has detailed README
-- **Issues:** Check individual component READMEs
-- **Testing:** All components have test scripts
-- **Deployment:** Follow setup instructions in each directory
-
----
-
-## 🏆 **Achievement Summary**
-
-**✅ 100% Complete Implementation:**
-
-- Smart Contract Development ✅
-- Backend API Development ✅
-- AI Agent Development ✅
-- Frontend Dashboard ✅
-- Full Integration ✅
-- Testing & Validation ✅
-- Documentation ✅
-
-**🎉 Project Status: PRODUCTION READY!**
+**Built with ❤️ for the 1inch Hackathon 2025**

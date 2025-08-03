@@ -1,0 +1,407 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import CardStat from "../components/CardStat";
+import CTAButton from "../components/CTAButton";
+---
+
+<Layout title="1inch Limit Orders - VaultPilot">
+  <Navbar />
+
+  <main class="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <!-- Header -->
+      <div
+        class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 animate-fade-in"
+      >
+        <div>
+          <h1 class="text-4xl font-bold text-white mb-4">
+            <span
+              class="bg-gradient-to-r from-primary-green to-primary-purple bg-clip-text text-transparent"
+              >1inch Limit Orders</span
+            >
+          </h1>
+          <p class="text-xl text-gray-300">
+            Create and manage limit orders using 1inch Protocol
+          </p>
+        </div>
+        <div class="mt-6 lg:mt-0">
+          <CTAButton variant="green" href="/vault-management" client:load>
+            <span>Vault Management</span>
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+              ></path>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+          </CTAButton>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+        <!-- Create Order Section -->
+        <div
+          class="p-6 bg-glass-gradient backdrop-blur-md border border-white/20 rounded-2xl shadow-glass animate-fade-in"
+        >
+          <h2 class="text-2xl font-bold text-primary-green mb-6">
+            Create Limit Order
+          </h2>
+
+          <form id="create-order-form" class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-400 mb-2"
+                >Maker Asset (Token Address)</label
+              >
+              <input
+                type="text"
+                id="maker-asset"
+                placeholder="0x..."
+                class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-green"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-400 mb-2"
+                >Taker Asset (Token Address)</label
+              >
+              <input
+                type="text"
+                id="taker-asset"
+                placeholder="0x..."
+                class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-green"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-400 mb-2"
+                >Maker Amount</label
+              >
+              <input
+                type="text"
+                id="maker-amount"
+                placeholder="1000000000000000000"
+                class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-green"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-400 mb-2"
+                >Taker Amount</label
+              >
+              <input
+                type="text"
+                id="taker-amount"
+                placeholder="1000000000000000000"
+                class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-green"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-400 mb-2"
+                >Expiration (Unix Timestamp)</label
+              >
+              <input
+                type="number"
+                id="expiration"
+                placeholder="1754199444"
+                class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-green"
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="w-full px-6 py-3 bg-gradient-to-r from-primary-green to-primary-purple text-black font-medium rounded-lg hover:shadow-glow transition-all duration-200"
+            >
+              Create Limit Order
+            </button>
+          </form>
+        </div>
+
+        <!-- Order Status Section -->
+        <div
+          class="p-6 bg-glass-gradient backdrop-blur-md border border-white/20 rounded-2xl shadow-glass animate-fade-in"
+        >
+          <h2 class="text-2xl font-bold text-primary-purple mb-6">
+            Order Status
+          </h2>
+
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-400 mb-2"
+                >Order Hash</label
+              >
+              <input
+                type="text"
+                id="order-hash"
+                placeholder="0x..."
+                class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-purple"
+              />
+            </div>
+
+            <button
+              id="check-status-btn"
+              class="w-full px-6 py-3 bg-gradient-to-r from-primary-purple to-primary-green text-black font-medium rounded-lg hover:shadow-glow transition-all duration-200"
+            >
+              Check Status
+            </button>
+
+            <div
+              id="order-status"
+              class="mt-4 p-4 bg-white/10 rounded-lg hidden"
+            >
+              <!-- Order status will be displayed here -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quote Section -->
+      <div
+        class="mb-12 p-6 bg-glass-gradient backdrop-blur-md border border-white/20 rounded-2xl shadow-glass animate-fade-in"
+      >
+        <h2 class="text-2xl font-bold text-primary-green mb-6">Get Quote</h2>
+
+        <form id="quote-form" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2"
+              >From Token</label
+            >
+            <input
+              type="text"
+              id="from-token"
+              placeholder="0x..."
+              class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-green"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2"
+              >To Token</label
+            >
+            <input
+              type="text"
+              id="to-token"
+              placeholder="0x..."
+              class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-green"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2"
+              >Amount</label
+            >
+            <input
+              type="text"
+              id="quote-amount"
+              placeholder="1000000000000000000"
+              class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-green"
+            />
+          </div>
+
+          <div class="flex items-end">
+            <button
+              type="submit"
+              class="w-full px-6 py-3 bg-gradient-to-r from-primary-green to-primary-purple text-black font-medium rounded-lg hover:shadow-glow transition-all duration-200"
+            >
+              Get Quote
+            </button>
+          </div>
+        </form>
+
+        <div id="quote-result" class="mt-4 p-4 bg-white/10 rounded-lg hidden">
+          <!-- Quote result will be displayed here -->
+        </div>
+      </div>
+
+      <!-- Recent Orders -->
+      <div
+        class="p-6 bg-glass-gradient backdrop-blur-md border border-white/20 rounded-2xl shadow-glass animate-fade-in"
+      >
+        <h2 class="text-2xl font-bold text-primary-purple mb-6">
+          Recent Orders
+        </h2>
+
+        <div id="recent-orders" class="space-y-4">
+          <div class="text-center text-gray-400">
+            No orders yet. Create your first limit order above.
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+  const API_BASE_URL = "http://localhost:3001";
+
+  // Create Order Form
+  document
+    .getElementById("create-order-form")
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = {
+        makerAsset: document.getElementById("maker-asset").value,
+        takerAsset: document.getElementById("taker-asset").value,
+        makerAmount: document.getElementById("maker-amount").value,
+        takerAmount: document.getElementById("taker-amount").value,
+        expiration: parseInt(document.getElementById("expiration").value),
+      };
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/1inch/create-order`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          alert(
+            `Order created successfully!\nOrder Hash: ${data.data.orderHash}`
+          );
+          // Store order hash for recent orders
+          addToRecentOrders(data.data);
+        } else {
+          alert(`Error: ${data.error}`);
+        }
+      } catch (error) {
+        console.error("Error creating order:", error);
+        alert("Failed to create order. Please try again.");
+      }
+    });
+
+  // Check Order Status
+  document
+    .getElementById("check-status-btn")
+    .addEventListener("click", async () => {
+      const orderHash = document.getElementById("order-hash").value;
+
+      if (!orderHash) {
+        alert("Please enter an order hash");
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          `${API_BASE_URL}/api/1inch/order-status/${orderHash}`
+        );
+        const data = await response.json();
+
+        const statusDiv = document.getElementById("order-status");
+        statusDiv.classList.remove("hidden");
+
+        if (data.success) {
+          statusDiv.innerHTML = `
+          <div class="text-green-400">
+            <h3 class="font-bold">Order Status</h3>
+            <p>Status: ${JSON.stringify(data.data, null, 2)}</p>
+          </div>
+        `;
+        } else {
+          statusDiv.innerHTML = `
+          <div class="text-red-400">
+            <h3 class="font-bold">Error</h3>
+            <p>${data.error}</p>
+          </div>
+        `;
+        }
+      } catch (error) {
+        console.error("Error checking status:", error);
+        alert("Failed to check order status. Please try again.");
+      }
+    });
+
+  // Get Quote Form
+  document
+    .getElementById("quote-form")
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const params = new URLSearchParams({
+        fromToken: document.getElementById("from-token").value,
+        toToken: document.getElementById("to-token").value,
+        amount: document.getElementById("quote-amount").value,
+      });
+
+      try {
+        const response = await fetch(
+          `${API_BASE_URL}/api/1inch/quote?${params}`
+        );
+        const data = await response.json();
+
+        const resultDiv = document.getElementById("quote-result");
+        resultDiv.classList.remove("hidden");
+
+        if (data.success) {
+          resultDiv.innerHTML = `
+          <div class="text-green-400">
+            <h3 class="font-bold">Quote Result</h3>
+            <pre class="text-sm mt-2">${JSON.stringify(data.data, null, 2)}</pre>
+          </div>
+        `;
+        } else {
+          resultDiv.innerHTML = `
+          <div class="text-red-400">
+            <h3 class="font-bold">Error</h3>
+            <p>${data.error}</p>
+          </div>
+        `;
+        }
+      } catch (error) {
+        console.error("Error getting quote:", error);
+        alert("Failed to get quote. Please try again.");
+      }
+    });
+
+  // Helper function to add orders to recent orders list
+  function addToRecentOrders(orderData) {
+    const recentOrdersDiv = document.getElementById("recent-orders");
+
+    // Remove the "no orders" message if it exists
+    if (recentOrdersDiv.querySelector(".text-gray-400")) {
+      recentOrdersDiv.innerHTML = "";
+    }
+
+    const orderElement = document.createElement("div");
+    orderElement.className =
+      "bg-white/10 border border-white/20 rounded-lg p-4";
+    orderElement.innerHTML = `
+      <div class="flex justify-between items-center">
+        <div>
+          <h3 class="font-bold text-primary-green">Order Hash</h3>
+          <p class="text-sm text-gray-400">${orderData.orderHash}</p>
+        </div>
+        <div class="text-right">
+          <span class="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs">Created</span>
+        </div>
+      </div>
+    `;
+
+    recentOrdersDiv.appendChild(orderElement);
+  }
+
+  // Set default expiration time (1 hour from now)
+  const defaultExpiration = Math.floor(Date.now() / 1000) + 3600;
+  document.getElementById("expiration").value = defaultExpiration;
+</script>
+

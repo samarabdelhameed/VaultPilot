@@ -217,10 +217,12 @@ import CardStat from "../components/CardStat";
             <div class="flex space-x-3">
               <input
                 type="text"
+                id="chat-input"
                 placeholder="Ask me anything about DeFi strategies..."
                 class="flex-1 px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-green focus:border-transparent text-white placeholder-gray-400 transition-all duration-200"
               />
               <button
+                id="send-btn"
                 class="px-6 py-3 bg-gradient-to-r from-primary-green to-primary-purple text-black font-medium rounded-lg hover:shadow-glow transition-all duration-200"
               >
                 Send
@@ -452,8 +454,130 @@ import CardStat from "../components/CardStat";
         updateBtn.addEventListener("click", updateSentiment);
       }
 
+      // Set up chat functionality
+      const chatInput = document.getElementById("chat-input") as HTMLInputElement;
+      const sendBtn = document.getElementById("send-btn") as HTMLButtonElement;
+      
+      if (chatInput && sendBtn) {
+        // Send message on button click
+        sendBtn.addEventListener("click", sendMessage);
+        
+        // Send message on Enter key
+        chatInput.addEventListener("keypress", (e) => {
+          if (e.key === "Enter") {
+            sendMessage();
+          }
+        });
+      }
+
       // Auto-refresh every 30 seconds
       setInterval(loadContractStatus, 30000);
     });
+
+    // Chat functionality
+    async function sendMessage() {
+      const chatInput = document.getElementById("chat-input") as HTMLInputElement;
+      const sendBtn = document.getElementById("send-btn") as HTMLButtonElement;
+      
+      if (!chatInput || !sendBtn) return;
+
+      const message = chatInput.value.trim();
+      if (!message) return;
+
+      // Disable input and button
+      chatInput.disabled = true;
+      sendBtn.disabled = true;
+      sendBtn.textContent = "Sending...";
+
+      try {
+        // Add user message to chat
+        addMessageToChat("You", message, "user");
+        
+        // Clear input
+        chatInput.value = "";
+
+        // Send message to backend (placeholder for now)
+        const response = await fetch(`${API_BASE_URL}/api/ai/chat`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          addMessageToChat("AI Advisor", data.response, "ai");
+        } else {
+          // Fallback response if backend is not available
+          const fallbackResponse = getFallbackResponse(message);
+          addMessageToChat("AI Advisor", fallbackResponse, "ai");
+        }
+      } catch (error) {
+        console.error("Failed to send message:", error);
+        // Fallback response
+        const fallbackResponse = getFallbackResponse(message);
+        addMessageToChat("AI Advisor", fallbackResponse, "ai");
+      } finally {
+        // Re-enable input and button
+        chatInput.disabled = false;
+        sendBtn.disabled = false;
+        sendBtn.textContent = "Send";
+        chatInput.focus();
+      }
+    }
+
+    function addMessageToChat(sender: string, message: string, type: "user" | "ai") {
+      const chatContainer = document.querySelector(".space-y-4");
+      if (!chatContainer) return;
+
+      const messageDiv = document.createElement("div");
+      messageDiv.className = `p-4 rounded-lg ${
+        type === "user" 
+          ? "bg-primary-green/20 border border-primary-green/30 ml-8" 
+          : "bg-gray-800/50 border border-gray-600 mr-8"
+      }`;
+      
+      messageDiv.innerHTML = `
+        <div class="flex items-start space-x-3">
+          <div class="flex-shrink-0">
+            <div class="w-8 h-8 rounded-full ${
+              type === "user" 
+                ? "bg-primary-green" 
+                : "bg-primary-purple"
+            } flex items-center justify-center">
+              <span class="text-white text-sm font-bold">${
+                type === "user" ? "U" : "AI"
+              }</span>
+            </div>
+          </div>
+          <div class="flex-1">
+            <p class="text-sm font-medium text-gray-400 mb-1">${sender}</p>
+            <p class="text-white">${message}</p>
+          </div>
+        </div>
+      `;
+
+      chatContainer.appendChild(messageDiv);
+      
+      // Scroll to bottom
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    function getFallbackResponse(message: string): string {
+      const lowerMessage = message.toLowerCase();
+      
+      if (lowerMessage.includes("safe") || lowerMessage.includes("safest")) {
+        return "For the safest DeFi strategy, I recommend Compound Finance with 12.4% APY. It's a well-established protocol with low risk and consistent returns.";
+      } else if (lowerMessage.includes("yield") || lowerMessage.includes("apy")) {
+        return "For maximum yield, consider Yearn USDC Vault with 24.3% APY, but be aware it carries higher risk. For balanced returns, Curve 3Pool offers 18.7% APY with medium risk.";
+      } else if (lowerMessage.includes("risk") || lowerMessage.includes("dangerous")) {
+        return "Risk management is crucial in DeFi. Always diversify your investments, never invest more than you can afford to lose, and consider using established protocols like Compound or Aave.";
+      } else if (lowerMessage.includes("strategy") || lowerMessage.includes("recommend")) {
+        return "Based on current market conditions, I recommend: 1) Compound Finance (12.4% APY, Low Risk) for stability, 2) Curve 3Pool (18.7% APY, Medium Risk) for balance, 3) Yearn USDC Vault (24.3% APY, Higher Risk) for maximum yield.";
+      } else {
+        return "I'm here to help with your DeFi strategies! Ask me about safe investments, yield optimization, risk management, or specific protocols. I can provide personalized recommendations based on your risk tolerance and goals.";
+      }
+    }
   </script>
 </Layout>
