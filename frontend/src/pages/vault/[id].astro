@@ -2,24 +2,24 @@
 export async function getStaticPaths() {
   // Generate static paths for demo vaults
   return [
-    { params: { id: 'eth-twap-vault' } },
-    { params: { id: 'btc-sentiment-vault' } },
-    { params: { id: 'hybrid-strategy-vault' } },
-    { params: { id: 'eth-usdc-twap-vault' } },
-    { params: { id: 'eth-usdc-sentiment-vault' } },
-    { params: { id: 'eth-usdc-hybrid-vault' } },
-    { params: { id: 'btc-usdt-twap-vault' } },
-    { params: { id: 'btc-usdt-sentiment-vault' } },
-    { params: { id: 'btc-usdt-hybrid-vault' } },
-    { params: { id: 'eth-btc-twap-vault' } },
-    { params: { id: 'eth-btc-sentiment-vault' } },
-    { params: { id: 'eth-btc-hybrid-vault' } },
-    { params: { id: 'matic-usdc-twap-vault' } },
-    { params: { id: 'matic-usdc-sentiment-vault' } },
-    { params: { id: 'matic-usdc-hybrid-vault' } },
-    { params: { id: 'demo-vault-1' } },
-    { params: { id: 'demo-vault-2' } },
-    { params: { id: 'demo-vault-3' } }
+    { params: { id: "eth-twap-vault" } },
+    { params: { id: "btc-sentiment-vault" } },
+    { params: { id: "hybrid-strategy-vault" } },
+    { params: { id: "eth-usdc-twap-vault" } },
+    { params: { id: "eth-usdc-sentiment-vault" } },
+    { params: { id: "eth-usdc-hybrid-vault" } },
+    { params: { id: "btc-usdt-twap-vault" } },
+    { params: { id: "btc-usdt-sentiment-vault" } },
+    { params: { id: "btc-usdt-hybrid-vault" } },
+    { params: { id: "eth-btc-twap-vault" } },
+    { params: { id: "eth-btc-sentiment-vault" } },
+    { params: { id: "eth-btc-hybrid-vault" } },
+    { params: { id: "matic-usdc-twap-vault" } },
+    { params: { id: "matic-usdc-sentiment-vault" } },
+    { params: { id: "matic-usdc-hybrid-vault" } },
+    { params: { id: "demo-vault-1" } },
+    { params: { id: "demo-vault-2" } },
+    { params: { id: "demo-vault-3" } },
   ];
 }
 
@@ -28,131 +28,255 @@ const { id } = Astro.params;
 // Mock vault data based on ID
 const getVaultData = (vaultId: string) => {
   const vaultConfigs = {
-    'eth-twap-vault': {
-      name: 'ETH TWAP Smart Vault',
-      strategy: 'TWAP',
-      tradingPair: 'ETH/USDC',
-      balance: '$45,230',
-      roi: '28.4%',
+    "eth-twap-vault": {
+      name: "ETH TWAP Smart Vault",
+      strategy: "TWAP",
+      tradingPair: "ETH/USDC",
+      balance: "$45,230",
+      roi: "28.4%",
       trades: 342,
-      status: 'Active'
+      status: "Active",
     },
-    'eth-usdc-twap-vault': {
-      name: 'ETH/USDC TWAP Smart Vault',
-      strategy: 'TWAP',
-      tradingPair: 'ETH/USDC',
-      balance: '$32,150',
-      roi: '22.1%',
+    "eth-usdc-twap-vault": {
+      name: "ETH/USDC TWAP Smart Vault",
+      strategy: "TWAP",
+      tradingPair: "ETH/USDC",
+      balance: "$32,150",
+      roi: "22.1%",
       trades: 89,
-      status: 'Active'
+      status: "Active",
     },
-    'eth-usdc-sentiment-vault': {
-      name: 'ETH/USDC Sentiment Smart Vault',
-      strategy: 'Sentiment',
-      tradingPair: 'ETH/USDC',
-      balance: '$28,750',
-      roi: '19.8%',
+    "eth-usdc-sentiment-vault": {
+      name: "ETH/USDC Sentiment Smart Vault",
+      strategy: "Sentiment",
+      tradingPair: "ETH/USDC",
+      balance: "$28,750",
+      roi: "19.8%",
       trades: 67,
-      status: 'Active'
+      status: "Active",
     },
-    'eth-usdc-hybrid-vault': {
-      name: 'ETH/USDC Hybrid Smart Vault',
-      strategy: 'Hybrid',
-      tradingPair: 'ETH/USDC',
-      balance: '$41,200',
-      roi: '31.5%',
+    "eth-usdc-hybrid-vault": {
+      name: "ETH/USDC Hybrid Smart Vault",
+      strategy: "Hybrid",
+      tradingPair: "ETH/USDC",
+      balance: "$41,200",
+      roi: "31.5%",
       trades: 124,
-      status: 'Active'
+      status: "Active",
     },
-    'btc-sentiment-vault': {
-      name: 'BTC Sentiment Smart Vault',
-      strategy: 'Sentiment',
-      tradingPair: 'BTC/USDT',
-      balance: '$67,890',
-      roi: '19.2%',
+    "btc-sentiment-vault": {
+      name: "BTC Sentiment Smart Vault",
+      strategy: "Sentiment",
+      tradingPair: "BTC/USDT",
+      balance: "$67,890",
+      roi: "19.2%",
       trades: 156,
-      status: 'Active'
+      status: "Active",
     },
-    'hybrid-strategy-vault': {
-      name: 'Hybrid Strategy Smart Vault',
-      strategy: 'Hybrid',
-      tradingPair: 'ETH/BTC',
-      balance: '$14,330',
-      roi: '31.7%',
+    "hybrid-strategy-vault": {
+      name: "Hybrid Strategy Smart Vault",
+      strategy: "Hybrid",
+      tradingPair: "ETH/BTC",
+      balance: "$14,330",
+      roi: "31.7%",
       trades: 749,
-      status: 'Paused'
+      status: "Paused",
+    },
+  };
+
+  return (
+    vaultConfigs[vaultId as keyof typeof vaultConfigs] || {
+      name: "New Smart Vault",
+      strategy: vaultId.includes("sentiment")
+        ? "Sentiment"
+        : vaultId.includes("hybrid")
+          ? "Hybrid"
+          : "TWAP",
+      tradingPair: "ETH/USDC",
+      balance: "$25,000",
+      roi: "15.5%",
+      trades: 89,
+      status: "Active",
     }
-  };
-  
-  return vaultConfigs[vaultId as keyof typeof vaultConfigs] || {
-    name: 'New Smart Vault',
-    strategy: vaultId.includes('sentiment') ? 'Sentiment' : vaultId.includes('hybrid') ? 'Hybrid' : 'TWAP',
-    tradingPair: 'ETH/USDC',
-    balance: '$25,000',
-    roi: '15.5%',
-    trades: 89,
-    status: 'Active'
-  };
+  );
 };
 
-const vaultInfo = getVaultData(id || '');
+const vaultInfo = getVaultData(id || "");
 
-import Layout from '../../layouts/Layout.astro';
-import Navbar from '../../components/Navbar.astro';
-import Footer from '../../components/Footer.astro';
-import CardStat from '../../components/CardStat';
-import ChartCard from '../../components/ChartCard';
-import CTAButton from '../../components/CTAButton';
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import CardStat from "../../components/CardStat";
+import ChartCard from "../../components/ChartCard";
+import CTAButton from "../../components/CTAButton";
 
 // Mock data - in real app, this would come from the vault ID
-const vaultData = [1000, 1200, 1100, 1400, 1600, 1800, 2100, 1900, 2200, 2500, 2700, 2900];
-const labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8', 'Week 9', 'Week 10', 'Week 11', 'Week 12'];
+const vaultData = [
+  1000, 1200, 1100, 1400, 1600, 1800, 2100, 1900, 2200, 2500, 2700, 2900,
+];
+const labels = [
+  "Week 1",
+  "Week 2",
+  "Week 3",
+  "Week 4",
+  "Week 5",
+  "Week 6",
+  "Week 7",
+  "Week 8",
+  "Week 9",
+  "Week 10",
+  "Week 11",
+  "Week 12",
+];
 ---
 
 <Layout title="Vault Dashboard - VaultPilot">
   <Navbar />
-  
+
   <main class="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
     <div class="max-w-7xl mx-auto">
       <!-- Header -->
       <div class="mb-12 animate-fade-in">
-        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+        <div
+          class="flex flex-col lg:flex-row lg:items-center lg:justify-between"
+        >
           <div>
             <h1 class="text-4xl font-bold text-white mb-4">
-              {vaultInfo.name.split(' ').slice(0, -2).join(' ')} <span class="bg-gradient-to-r from-primary-green to-primary-purple bg-clip-text text-transparent">Smart Vault</span>
+              {vaultInfo.name.split(" ").slice(0, -2).join(" ")}
+              <span
+                class="bg-gradient-to-r from-primary-green to-primary-purple bg-clip-text text-transparent"
+                >Smart Vault</span
+              >
             </h1>
-            <p class="text-gray-300 mb-4">Contract: 0x1234...5678 • Strategy: {vaultInfo.strategy} • Created: Jan 15, 2025</p>
+            <p class="text-gray-300 mb-4">
+              Contract: 0x71C3f104aB544377712A8d1B393fB981F37226b6 • Strategy: {
+                vaultInfo.strategy
+              } • Created: Jan 15, 2025
+            </p>
             <div class="flex items-center space-x-4">
-              <span class={`px-3 py-1 text-sm font-medium rounded-full ${
-                vaultInfo.status === 'Active' 
-                  ? 'bg-primary-green/20 text-primary-green' 
-                  : 'bg-yellow-500/20 text-yellow-400'
-              }`}>
+              <span
+                class={`px-3 py-1 text-sm font-medium rounded-full ${
+                  vaultInfo.status === "Active"
+                    ? "bg-primary-green/20 text-primary-green"
+                    : "bg-yellow-500/20 text-yellow-400"
+                }`}
+              >
                 {vaultInfo.status}
               </span>
-              <span class="px-3 py-1 bg-blue-500/20 text-blue-400 text-sm font-medium rounded-full">
+              <span
+                class="px-3 py-1 bg-blue-500/20 text-blue-400 text-sm font-medium rounded-full"
+              >
                 {vaultInfo.tradingPair}
               </span>
             </div>
           </div>
           <div class="mt-6 lg:mt-0 flex space-x-4">
-            <button 
+            <button
               id="execute-trade-btn"
               class="px-8 py-4 bg-gradient-to-r from-primary-green to-emerald-400 text-black font-semibold rounded-full hover:shadow-glow transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
             >
               <span id="execute-text">Execute Trade</span>
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 10V3L4 14h7v7l9-11h-7z"></path>
               </svg>
             </button>
-            <button 
+            <button
               id="pause-strategy-btn"
               class="px-8 py-4 bg-transparent border-2 border-primary-green hover:bg-primary-green hover:text-black text-primary-green font-semibold rounded-full transition-all duration-200 transform hover:scale-105 flex items-center space-x-2"
             >
               <span id="pause-text">Pause Strategy</span>
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Smart Contract Status Section -->
+      <div
+        class="mb-12 p-6 bg-glass-gradient backdrop-blur-md border border-white/20 rounded-2xl shadow-glass animate-fade-in"
+      >
+        <h2 class="text-2xl font-bold text-white mb-4">
+          Smart Contract Status
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <div class="bg-white/10 p-4 rounded-lg">
+            <h3 class="text-sm font-medium text-gray-400 mb-2">
+              Execution Status
+            </h3>
+            <p
+              class="text-lg font-semibold text-primary-green"
+              id="execution-status"
+            >
+              Loading...
+            </p>
+          </div>
+          <div class="bg-white/10 p-4 rounded-lg">
+            <h3 class="text-sm font-medium text-gray-400 mb-2">
+              Sentiment Score
+            </h3>
+            <p class="text-lg font-semibold text-white" id="sentiment-score">
+              Loading...
+            </p>
+          </div>
+          <div class="bg-white/10 p-4 rounded-lg">
+            <h3 class="text-sm font-medium text-gray-400 mb-2">
+              Next Execution
+            </h3>
+            <p
+              class="text-sm font-semibold text-primary-purple"
+              id="next-execution"
+            >
+              Loading...
+            </p>
+          </div>
+          <div class="bg-white/10 p-4 rounded-lg">
+            <h3 class="text-sm font-medium text-gray-400 mb-2">Network</h3>
+            <p class="text-sm font-semibold text-primary-purple">
+              Sepolia Testnet
+            </p>
+          </div>
+        </div>
+
+        <!-- Sentiment Update Controls -->
+        <div class="p-4 bg-white/5 rounded-lg">
+          <h3 class="text-lg font-semibold text-white mb-3">
+            Update Sentiment Score
+          </h3>
+          <div class="flex items-center space-x-4">
+            <input
+              type="number"
+              id="sentiment-input"
+              min="0"
+              max="100"
+              value="70"
+              class="flex-1 px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-green"
+              placeholder="Enter sentiment score (0-100)"
+            />
+            <button
+              id="update-sentiment-btn"
+              class="px-6 py-2 bg-primary-green text-white font-medium rounded-lg hover:bg-primary-green/80 transition-colors"
+            >
+              Update
             </button>
           </div>
         </div>
@@ -160,7 +284,7 @@ const labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Wee
 
       <!-- Stats Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-        <CardStat 
+        <CardStat
           client:load
           title="Vault Balance"
           value={vaultInfo.balance}
@@ -168,7 +292,7 @@ const labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Wee
           isPositive={true}
           gradient="green"
         />
-        <CardStat 
+        <CardStat
           client:load
           title="Total Trades"
           value={vaultInfo.trades.toString()}
@@ -176,7 +300,7 @@ const labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Wee
           isPositive={true}
           gradient="purple"
         />
-        <CardStat 
+        <CardStat
           client:load
           title="ROI"
           value={vaultInfo.roi}
@@ -184,7 +308,7 @@ const labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Wee
           isPositive={true}
           gradient="green"
         />
-        <CardStat 
+        <CardStat
           client:load
           title="Sentiment Score"
           value="0.73"
@@ -198,116 +322,74 @@ const labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Wee
       <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-12">
         <ChartCard
           client:load
-          title="Vault Performance (USD)"
+          title="Vault Performance"
           data={vaultData}
           labels={labels}
           gradient="green"
         />
-        
-        <div class="p-6 bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl animate-fade-in">
-          <h3 class="text-lg font-semibold text-white mb-6">AI Insights & Strategy</h3>
-          <div class="space-y-4">
-            <div class="p-4 bg-primary-green/10 border border-primary-green/20 rounded-lg">
-              <div class="flex items-center space-x-2 mb-2">
-                <div class="w-2 h-2 bg-primary-green rounded-full"></div>
-                <span class="text-primary-green font-medium">AI Recommendation</span>
-              </div>
-              <p class="text-gray-300 text-sm">
-                Current market volatility suggests increasing TWAP interval to 4h for better risk management.
-              </p>
-              <button class="mt-3 px-4 py-2 bg-primary-green/20 hover:bg-primary-green/30 text-primary-green rounded-lg text-sm transition-colors">
-                <span id="apply-suggestion-text">Apply Suggestion</span>
-              </button>
-            </div>
-
-            <div class="space-y-3">
-              <h4 class="text-white font-medium">Strategy Parameters</h4>
-              <div class="flex justify-between">
-                <span class="text-gray-400">Time Interval</span>
-                <span class="text-white">1 Hour</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">Max Drawdown</span>
-                <span class="text-white">10%</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">Next Trade</span>
-                <span class="text-primary-green">In 23 minutes</span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="mt-6 pt-6 border-t border-gray-700">
-            <h4 class="text-white font-medium mb-4">Recent Trades</h4>
-            <div class="space-y-3">
-              <div class="flex justify-between items-center text-sm">
-                <span class="text-gray-400">Buy ETH @ $3,245</span>
-                <span class="text-primary-green">+$89.23</span>
-              </div>
-              <div class="flex justify-between items-center text-sm">
-                <span class="text-gray-400">Sell ETH @ $3,289</span>
-                <span class="text-primary-green">+$156.78</span>
-              </div>
-              <div class="flex justify-between items-center text-sm">
-                <span class="text-gray-400">Buy ETH @ $3,198</span>
-                <span class="text-primary-green">+$234.12</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ChartCard
+          client:load
+          title="Trading Volume"
+          data={[
+            500, 600, 550, 700, 800, 900, 1050, 950, 1100, 1250, 1350, 1450,
+          ]}
+          labels={labels}
+          gradient="purple"
+        />
       </div>
 
-      <!-- Actions Panel -->
-      <div class="bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-8 animate-fade-in">
-        <h3 class="text-2xl font-bold text-white mb-6">Vault Management</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="text-center">
-            <div class="w-16 h-16 bg-gradient-to-br from-primary-green to-emerald-400 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
+      <!-- Recent Trades -->
+      <div
+        class="p-6 bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl animate-fade-in"
+      >
+        <h3 class="text-xl font-semibold text-white mb-6">Recent Trades</h3>
+        <div class="space-y-4">
+          <div
+            class="flex items-center justify-between p-4 bg-white/5 rounded-lg"
+          >
+            <div class="flex items-center space-x-4">
+              <div class="w-3 h-3 bg-primary-green rounded-full"></div>
+              <div>
+                <p class="text-white font-medium">Buy ETH</p>
+                <p class="text-gray-400 text-sm">2 hours ago</p>
+              </div>
             </div>
-            <h4 class="text-white font-semibold mb-2">Execute Now</h4>
-            <p class="text-gray-400 mb-4">Manually trigger a trade</p>
-            <button 
-              id="manual-execute-btn"
-              class="px-6 py-3 bg-gradient-to-r from-primary-green to-emerald-400 text-black font-semibold rounded-full hover:shadow-glow transition-all duration-200 transform hover:scale-105"
-            >
-              Execute
-            </button>
+            <div class="text-right">
+              <p class="text-primary-green font-semibold">+$1,250</p>
+              <p class="text-gray-400 text-sm">2.5 ETH @ $2,100</p>
+            </div>
           </div>
-          
-          <div class="text-center">
-            <div class="w-16 h-16 bg-gradient-to-br from-primary-purple to-violet-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
+
+          <div
+            class="flex items-center justify-between p-4 bg-white/5 rounded-lg"
+          >
+            <div class="flex items-center space-x-4">
+              <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+              <div>
+                <p class="text-white font-medium">Sell USDC</p>
+                <p class="text-gray-400 text-sm">4 hours ago</p>
+              </div>
             </div>
-            <h4 class="text-white font-semibold mb-2">Settings</h4>
-            <p class="text-gray-400 mb-4">Adjust strategy parameters</p>
-            <button 
-              id="configure-btn"
-              class="px-6 py-3 bg-gradient-to-r from-primary-purple to-violet-500 text-white font-semibold rounded-full hover:shadow-purple transition-all duration-200 transform hover:scale-105"
-            >
-              Configure
-            </button>
+            <div class="text-right">
+              <p class="text-red-400 font-semibold">-$850</p>
+              <p class="text-gray-400 text-sm">1,000 USDC @ $1.00</p>
+            </div>
           </div>
-          
-          <div class="text-center">
-            <div class="w-16 h-16 bg-gradient-to-br from-gray-600 to-gray-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+
+          <div
+            class="flex items-center justify-between p-4 bg-white/5 rounded-lg"
+          >
+            <div class="flex items-center space-x-4">
+              <div class="w-3 h-3 bg-primary-green rounded-full"></div>
+              <div>
+                <p class="text-white font-medium">Buy ETH</p>
+                <p class="text-gray-400 text-sm">6 hours ago</p>
+              </div>
             </div>
-            <h4 class="text-white font-semibold mb-2">Pause</h4>
-            <p class="text-gray-400 mb-4">Temporarily stop trading</p>
-            <button 
-              id="pause-vault-btn"
-              class="px-6 py-3 bg-transparent border-2 border-gray-500 hover:border-primary-green hover:text-primary-green text-gray-400 font-semibold rounded-full transition-all duration-200 transform hover:scale-105"
-            >
-              Pause
-            </button>
+            <div class="text-right">
+              <p class="text-primary-green font-semibold">+$2,100</p>
+              <p class="text-gray-400 text-sm">1.0 ETH @ $2,100</p>
+            </div>
           </div>
         </div>
       </div>
@@ -315,192 +397,164 @@ const labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Wee
   </main>
 
   <Footer />
+
+  <script>
+    // Vault Details Integration
+    const API_BASE_URL = "http://localhost:3001";
+
+    async function loadContractStatus() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/contract/status`);
+        const data = await response.json();
+
+        if (data.success) {
+          const contractData = data.data;
+
+          // Update execution status
+          const executionStatus = document.getElementById("execution-status");
+          if (executionStatus) {
+            executionStatus.textContent = contractData.canExecute
+              ? "Ready"
+              : "Not Ready";
+            executionStatus.className = contractData.canExecute
+              ? "text-lg font-semibold text-primary-green"
+              : "text-lg font-semibold text-red-400";
+          }
+
+          // Update sentiment score
+          const sentimentScore = document.getElementById("sentiment-score");
+          if (sentimentScore) {
+            sentimentScore.textContent = contractData.sentimentScore;
+          }
+
+          // Update next execution time
+          const nextExecution = document.getElementById("next-execution");
+          if (nextExecution) {
+            const nextTime = new Date(contractData.nextExecutionTime * 1000);
+            nextExecution.textContent = nextTime.toLocaleString();
+          }
+
+          // Update sentiment input
+          const sentimentInput = document.getElementById(
+            "sentiment-input"
+          ) as HTMLInputElement;
+          if (sentimentInput) {
+            sentimentInput.value = contractData.sentimentScore.toString();
+          }
+
+          // Update execute trade button
+          const executeBtn = document.getElementById(
+            "execute-trade-btn"
+          ) as HTMLButtonElement;
+          const executeText = document.getElementById("execute-text");
+          if (executeBtn && executeText) {
+            if (contractData.canExecute) {
+              executeBtn.disabled = false;
+              executeText.textContent = "Execute Trade";
+            } else {
+              executeBtn.disabled = true;
+              executeText.textContent = "Waiting for Conditions";
+            }
+          }
+        }
+      } catch (error) {
+        console.error("Failed to load contract status:", error);
+      }
+    }
+
+    async function updateSentiment() {
+      const input = document.getElementById(
+        "sentiment-input"
+      ) as HTMLInputElement;
+      const button = document.getElementById(
+        "update-sentiment-btn"
+      ) as HTMLButtonElement;
+
+      if (!input || !button) return;
+
+      const score = parseInt(input.value);
+      if (isNaN(score) || score < 0 || score > 100) {
+        alert("Please enter a valid score between 0 and 100");
+        return;
+      }
+
+      button.textContent = "Updating...";
+      button.disabled = true;
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/contract/sentiment`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ score }),
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          console.log("Sentiment updated successfully:", data.data);
+          await loadContractStatus(); // Reload status
+          alert("Sentiment score updated successfully!");
+        } else {
+          alert("Failed to update sentiment score");
+        }
+      } catch (error) {
+        console.error("Failed to update sentiment:", error);
+        alert("Failed to update sentiment score");
+      } finally {
+        button.textContent = "Update";
+        button.disabled = false;
+      }
+    }
+
+    async function executeTrade() {
+      const button = document.getElementById(
+        "execute-trade-btn"
+      ) as HTMLButtonElement;
+      const text = document.getElementById("execute-text");
+
+      if (!button || !text) return;
+
+      button.disabled = true;
+      text.textContent = "Executing...";
+
+      try {
+        // Note: This would require actual order data from 1inch
+        // For now, we'll just show a message
+        alert(
+          "Trade execution requires valid 1inch order data. This feature is limited on Sepolia testnet."
+        );
+      } catch (error) {
+        console.error("Failed to execute trade:", error);
+        alert("Failed to execute trade");
+      } finally {
+        button.disabled = false;
+        text.textContent = "Execute Trade";
+      }
+    }
+
+    // Initialize
+    document.addEventListener("DOMContentLoaded", () => {
+      loadContractStatus();
+
+      // Set up event listeners
+      const updateBtn = document.getElementById(
+        "update-sentiment-btn"
+      ) as HTMLButtonElement;
+      if (updateBtn) {
+        updateBtn.addEventListener("click", updateSentiment);
+      }
+
+      const executeBtn = document.getElementById(
+        "execute-trade-btn"
+      ) as HTMLButtonElement;
+      if (executeBtn) {
+        executeBtn.addEventListener("click", executeTrade);
+      }
+
+      // Auto-refresh every 30 seconds
+      setInterval(loadContractStatus, 30000);
+    });
+  </script>
 </Layout>
-
-<script>
-  // Execute Trade Functionality
-  document.getElementById('execute-trade-btn')?.addEventListener('click', async function() {
-    const btn = this as HTMLButtonElement;
-    const text = document.getElementById('execute-text');
-    
-    // Show loading state
-    btn.disabled = true;
-    btn.classList.add('opacity-50');
-    if (text) text.textContent = 'Executing...';
-    
-    // Add loading spinner
-    const spinner = document.createElement('div');
-    spinner.className = 'w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin';
-    btn.insertBefore(spinner, btn.firstChild);
-    
-    // Simulate trade execution
-    await new Promise(resolve => setTimeout(resolve, 3000));
-    
-    // Show success state
-    spinner.remove();
-    if (text) text.textContent = 'Trade Executed!';
-    btn.classList.remove('opacity-50');
-    btn.classList.add('bg-green-500');
-    
-    // Reset after 2 seconds
-    setTimeout(() => {
-      if (text) text.textContent = 'Execute Trade';
-      btn.disabled = false;
-      btn.classList.remove('bg-green-500');
-    }, 2000);
-    
-    // Show success notification
-    showNotification('Trade executed successfully! +$234.56 profit', 'success');
-  });
-
-  // Pause Strategy Functionality
-  document.getElementById('pause-strategy-btn')?.addEventListener('click', async function() {
-    const btn = this as HTMLButtonElement;
-    const text = document.getElementById('pause-text');
-    const statusBadge = document.querySelector('.bg-primary-green\\/20');
-    
-    // Toggle pause state
-    const isPaused = text?.textContent === 'Resume Strategy';
-    
-    if (!isPaused) {
-      // Pause the strategy
-      if (text) text.textContent = 'Pausing...';
-      btn.disabled = true;
-      
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      if (text) text.textContent = 'Resume Strategy';
-      if (statusBadge) {
-        statusBadge.className = 'px-3 py-1 bg-yellow-500/20 text-yellow-400 text-sm font-medium rounded-full';
-        statusBadge.textContent = 'Paused';
-      }
-      showNotification('Strategy paused successfully', 'warning');
-    } else {
-      // Resume the strategy
-      if (text) text.textContent = 'Resuming...';
-      btn.disabled = true;
-      
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      if (text) text.textContent = 'Pause Strategy';
-      if (statusBadge) {
-        statusBadge.className = 'px-3 py-1 bg-primary-green/20 text-primary-green text-sm font-medium rounded-full';
-        statusBadge.textContent = 'Active';
-      }
-      showNotification('Strategy resumed successfully', 'success');
-    }
-    
-    btn.disabled = false;
-  });
-
-  // Apply AI Suggestion Functionality
-  document.querySelector('#apply-suggestion-text')?.parentElement?.addEventListener('click', async function() {
-    const btn = this as HTMLButtonElement;
-    const text = document.getElementById('apply-suggestion-text');
-    
-    // Show loading state
-    btn.disabled = true;
-    if (text) text.textContent = 'Applying...';
-    
-    // Add loading spinner
-    const spinner = document.createElement('div');
-    spinner.className = 'w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin mr-2';
-    btn.insertBefore(spinner, btn.firstChild);
-    
-    // Simulate AI suggestion application
-    await new Promise(resolve => setTimeout(resolve, 2500));
-    
-    // Update strategy parameters
-    const timeIntervalElement = document.querySelector('.flex.justify-between:nth-child(3) .text-white');
-    if (timeIntervalElement) {
-      timeIntervalElement.textContent = '4 Hours';
-    }
-    
-    // Show success state
-    spinner.remove();
-    if (text) text.textContent = 'Applied Successfully!';
-    btn.classList.add('bg-primary-green/40');
-    
-    // Reset after 3 seconds
-    setTimeout(() => {
-      if (text) text.textContent = 'Apply Suggestion';
-      btn.disabled = false;
-      btn.classList.remove('bg-primary-green/40');
-    }, 3000);
-    
-    showNotification('AI suggestion applied! TWAP interval updated to 4h', 'success');
-  });
-
-  // Manual Execute Button
-  document.getElementById('manual-execute-btn')?.addEventListener('click', async function() {
-    const btn = this as HTMLButtonElement;
-    
-    btn.disabled = true;
-    btn.textContent = 'Executing...';
-    
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    btn.textContent = 'Executed!';
-    btn.classList.add('bg-green-500');
-    
-    setTimeout(() => {
-      btn.textContent = 'Execute';
-      btn.disabled = false;
-      btn.classList.remove('bg-green-500');
-    }, 2000);
-    
-    showNotification('Manual trade executed successfully!', 'success');
-  });
-
-  // Configure Button
-  document.getElementById('configure-btn')?.addEventListener('click', function() {
-    showNotification('Opening strategy configuration...', 'info');
-    // In real app, this would open a modal or navigate to settings
-  });
-
-  // Pause Vault Button
-  document.getElementById('pause-vault-btn')?.addEventListener('click', function() {
-    const btn = this as HTMLButtonElement;
-    const isPaused = btn.textContent === 'Resume';
-    
-    if (!isPaused) {
-      btn.textContent = 'Resume';
-      btn.classList.add('border-yellow-500', 'text-yellow-400');
-      btn.classList.remove('border-gray-500', 'text-gray-400');
-      showNotification('Vault paused', 'warning');
-    } else {
-      btn.textContent = 'Pause';
-      btn.classList.remove('border-yellow-500', 'text-yellow-400');
-      btn.classList.add('border-gray-500', 'text-gray-400');
-      showNotification('Vault resumed', 'success');
-    }
-  });
-
-  // Notification System
-  function showNotification(message: string, type: 'success' | 'warning' | 'info' | 'error') {
-    const notification = document.createElement('div');
-    const colors = {
-      success: 'bg-green-500/20 border-green-500/30 text-green-400',
-      warning: 'bg-yellow-500/20 border-yellow-500/30 text-yellow-400',
-      info: 'bg-blue-500/20 border-blue-500/30 text-blue-400',
-      error: 'bg-red-500/20 border-red-500/30 text-red-400'
-    };
-    
-    notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg border backdrop-blur-md ${colors[type]} animate-slide-in-right`;
-    notification.innerHTML = `
-      <div class="flex items-center space-x-2">
-        <div class="w-2 h-2 rounded-full bg-current animate-pulse"></div>
-        <span>${message}</span>
-      </div>
-    `;
-    
-    document.body.appendChild(notification);
-    
-    // Auto remove after 4 seconds
-    setTimeout(() => {
-      notification.style.opacity = '0';
-      notification.style.transform = 'translateX(100%)';
-      setTimeout(() => notification.remove(), 300);
-    }, 4000);
-  }
-</script>

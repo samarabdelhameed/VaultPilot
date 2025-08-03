@@ -1,21 +1,26 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Navbar from '../components/Navbar.astro';
-import Footer from '../components/Footer.astro';
-import CardStat from '../components/CardStat';
-import CTAButton from '../components/CTAButton';
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import CardStat from "../components/CardStat";
+import CTAButton from "../components/CTAButton";
 ---
 
 <Layout title="My Vaults - VaultPilot">
   <Navbar />
-  
+
   <main class="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
     <div class="max-w-7xl mx-auto">
       <!-- Header -->
-      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 animate-fade-in">
+      <div
+        class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 animate-fade-in"
+      >
         <div>
           <h1 class="text-4xl font-bold text-white mb-4">
-            My <span class="bg-gradient-to-r from-primary-green to-primary-purple bg-clip-text text-transparent">Smart Vaults</span>
+            My <span
+              class="bg-gradient-to-r from-primary-green to-primary-purple bg-clip-text text-transparent"
+              >Smart Vaults</span
+            >
           </h1>
           <p class="text-xl text-gray-300">
             Manage and monitor your AI-powered DeFi strategies.
@@ -24,16 +29,88 @@ import CTAButton from '../components/CTAButton';
         <div class="mt-6 lg:mt-0">
           <CTAButton variant="green" href="/create-vault" client:load>
             <span>Create New Vault</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
             </svg>
           </CTAButton>
         </div>
       </div>
 
+      <!-- Contract Status Section -->
+      <div
+        class="mb-12 p-6 bg-glass-gradient backdrop-blur-md border border-white/20 rounded-2xl shadow-glass animate-fade-in"
+      >
+        <h2 class="text-2xl font-bold text-white mb-4">
+          Smart Contract Status
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white/10 p-4 rounded-lg">
+            <h3 class="text-sm font-medium text-gray-400 mb-2">
+              Contract Address
+            </h3>
+            <p class="text-white font-mono text-sm">
+              0x71C3f104aB544377712A8d1B393fB981F37226b6
+            </p>
+          </div>
+          <div class="bg-white/10 p-4 rounded-lg">
+            <h3 class="text-sm font-medium text-gray-400 mb-2">
+              Execution Status
+            </h3>
+            <p class="text-primary-green font-semibold" id="execution-status">
+              Loading...
+            </p>
+          </div>
+          <div class="bg-white/10 p-4 rounded-lg">
+            <h3 class="text-sm font-medium text-gray-400 mb-2">
+              Sentiment Score
+            </h3>
+            <p class="text-white font-semibold" id="sentiment-score">
+              Loading...
+            </p>
+          </div>
+          <div class="bg-white/10 p-4 rounded-lg">
+            <h3 class="text-sm font-medium text-gray-400 mb-2">Network</h3>
+            <p class="text-primary-purple font-semibold">Sepolia Testnet</p>
+          </div>
+        </div>
+
+        <!-- Sentiment Update Section -->
+        <div class="mt-6 p-4 bg-white/5 rounded-lg">
+          <h3 class="text-lg font-semibold text-white mb-3">
+            Update Sentiment Score
+          </h3>
+          <div class="flex items-center space-x-4">
+            <input
+              type="number"
+              id="sentiment-input"
+              min="0"
+              max="100"
+              value="70"
+              class="flex-1 px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-green"
+              placeholder="Enter sentiment score (0-100)"
+            />
+            <button
+              id="update-sentiment-btn"
+              class="px-6 py-2 bg-primary-green text-white font-medium rounded-lg hover:bg-primary-green/80 transition-colors"
+            >
+              Update
+            </button>
+          </div>
+        </div>
+      </div>
+
       <!-- Portfolio Overview -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-        <CardStat 
+        <CardStat
           client:load
           title="Total Portfolio Value"
           value="$127,450"
@@ -41,7 +118,7 @@ import CTAButton from '../components/CTAButton';
           isPositive={true}
           gradient="green"
         />
-        <CardStat 
+        <CardStat
           client:load
           title="Active Vaults"
           value="3"
@@ -49,7 +126,7 @@ import CTAButton from '../components/CTAButton';
           isPositive={true}
           gradient="purple"
         />
-        <CardStat 
+        <CardStat
           client:load
           title="Total Trades"
           value="1,247"
@@ -57,7 +134,7 @@ import CTAButton from '../components/CTAButton';
           isPositive={true}
           gradient="green"
         />
-        <CardStat 
+        <CardStat
           client:load
           title="Avg. ROI"
           value="24.3%"
@@ -70,14 +147,18 @@ import CTAButton from '../components/CTAButton';
       <!-- Vaults Grid -->
       <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
         <!-- Vault 1 -->
-        <div class="group p-6 bg-glass-gradient backdrop-blur-md border border-white/20 rounded-2xl shadow-glass hover:shadow-glass-hover transition-all duration-300 transform hover:scale-[1.02] animate-fade-in">
+        <div
+          class="group p-6 bg-glass-gradient backdrop-blur-md border border-white/20 rounded-2xl shadow-glass hover:shadow-glass-hover transition-all duration-300 transform hover:scale-[1.02] animate-fade-in"
+        >
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-xl font-semibold text-white">ETH TWAP Vault</h3>
-            <span class="px-3 py-1 bg-primary-green/20 text-primary-green text-sm font-medium rounded-full">
+            <span
+              class="px-3 py-1 bg-primary-green/20 text-primary-green text-sm font-medium rounded-full"
+            >
               Active
             </span>
           </div>
-          
+
           <div class="space-y-3 mb-6">
             <div class="flex justify-between">
               <span class="text-gray-400">Strategy</span>
@@ -101,20 +182,36 @@ import CTAButton from '../components/CTAButton';
             </div>
           </div>
 
-          <a href="/vault/eth-twap-vault" class="block w-full px-4 py-2 bg-gradient-to-r from-primary-green/20 to-primary-purple/20 hover:from-primary-green/30 hover:to-primary-purple/30 border border-white/20 text-white rounded-lg transition-all duration-200 transform hover:scale-105 text-center">
-            View Dashboard
-          </a>
+          <div class="flex space-x-3">
+            <CTAButton
+              variant="outline"
+              size="sm"
+              href="/vault/eth-twap-vault"
+              client:load
+            >
+              View Details
+            </CTAButton>
+            <CTAButton variant="green" size="sm" client:load>
+              Execute Trade
+            </CTAButton>
+          </div>
         </div>
 
         <!-- Vault 2 -->
-        <div class="group p-6 bg-glass-gradient backdrop-blur-md border border-white/20 rounded-2xl shadow-glass hover:shadow-glass-hover transition-all duration-300 transform hover:scale-[1.02] animate-fade-in">
+        <div
+          class="group p-6 bg-glass-gradient backdrop-blur-md border border-white/20 rounded-2xl shadow-glass hover:shadow-glass-hover transition-all duration-300 transform hover:scale-[1.02] animate-fade-in"
+        >
           <div class="flex items-center justify-between mb-4">
-            <h3 class="text-xl font-semibold text-white">BTC Sentiment Vault</h3>
-            <span class="px-3 py-1 bg-primary-purple/20 text-primary-purple text-sm font-medium rounded-full">
+            <h3 class="text-xl font-semibold text-white">
+              BTC Sentiment Vault
+            </h3>
+            <span
+              class="px-3 py-1 bg-primary-green/20 text-primary-green text-sm font-medium rounded-full"
+            >
               Active
             </span>
           </div>
-          
+
           <div class="space-y-3 mb-6">
             <div class="flex justify-between">
               <span class="text-gray-400">Strategy</span>
@@ -138,20 +235,36 @@ import CTAButton from '../components/CTAButton';
             </div>
           </div>
 
-          <a href="/vault/btc-sentiment-vault" class="block w-full px-4 py-2 bg-gradient-to-r from-primary-green/20 to-primary-purple/20 hover:from-primary-green/30 hover:to-primary-purple/30 border border-white/20 text-white rounded-lg transition-all duration-200 transform hover:scale-105 text-center">
-            View Dashboard
-          </a>
+          <div class="flex space-x-3">
+            <CTAButton
+              variant="outline"
+              size="sm"
+              href="/vault/btc-sentiment-vault"
+              client:load
+            >
+              View Details
+            </CTAButton>
+            <CTAButton variant="green" size="sm" client:load>
+              Execute Trade
+            </CTAButton>
+          </div>
         </div>
 
         <!-- Vault 3 -->
-        <div class="group p-6 bg-glass-gradient backdrop-blur-md border border-white/20 rounded-2xl shadow-glass hover:shadow-glass-hover transition-all duration-300 transform hover:scale-[1.02] animate-fade-in">
+        <div
+          class="group p-6 bg-glass-gradient backdrop-blur-md border border-white/20 rounded-2xl shadow-glass hover:shadow-glass-hover transition-all duration-300 transform hover:scale-[1.02] animate-fade-in"
+        >
           <div class="flex items-center justify-between mb-4">
-            <h3 class="text-xl font-semibold text-white">Hybrid Strategy Vault</h3>
-            <span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 text-sm font-medium rounded-full">
+            <h3 class="text-xl font-semibold text-white">
+              Hybrid Strategy Vault
+            </h3>
+            <span
+              class="px-3 py-1 bg-yellow-500/20 text-yellow-400 text-sm font-medium rounded-full"
+            >
               Paused
             </span>
           </div>
-          
+
           <div class="space-y-3 mb-6">
             <div class="flex justify-between">
               <span class="text-gray-400">Strategy</span>
@@ -175,24 +288,17 @@ import CTAButton from '../components/CTAButton';
             </div>
           </div>
 
-          <a href="/vault/hybrid-strategy-vault" class="block w-full px-4 py-2 bg-gradient-to-r from-primary-green/20 to-primary-purple/20 hover:from-primary-green/30 hover:to-primary-purple/30 border border-white/20 text-white rounded-lg transition-all duration-200 transform hover:scale-105 text-center">
-            View Dashboard
-          </a>
-        </div>
-
-        <!-- Empty State / Create New Vault Card -->
-        <div class="group p-6 bg-gradient-to-br from-primary-green/10 to-primary-purple/10 backdrop-blur-sm border border-primary-green/20 rounded-2xl hover:shadow-soft transition-all duration-300 transform hover:scale-[1.02] animate-fade-in">
-          <div class="text-center">
-            <div class="w-16 h-16 bg-gradient-to-br from-primary-green to-primary-purple rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-              </svg>
-            </div>
-            <h3 class="text-xl font-semibold text-white mb-4">Create New Vault</h3>
-            <p class="text-gray-400 mb-6">Deploy a new AI-powered trading strategy and start earning passive income.</p>
-            
-            <CTAButton variant="green" href="/create-vault" className="w-full" client:load>
-              Get Started
+          <div class="flex space-x-3">
+            <CTAButton
+              variant="outline"
+              size="sm"
+              href="/vault/hybrid-strategy-vault"
+              client:load
+            >
+              View Details
+            </CTAButton>
+            <CTAButton variant="outline" size="sm" client:load>
+              Resume
             </CTAButton>
           </div>
         </div>
@@ -201,4 +307,109 @@ import CTAButton from '../components/CTAButton';
   </main>
 
   <Footer />
+
+  <script>
+    // Contract Status Integration
+    const API_BASE_URL = "http://localhost:3001";
+
+    async function loadContractStatus() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/contract/status`);
+        const data = await response.json();
+
+        if (data.success) {
+          const contractData = data.data;
+
+          // Update execution status
+          const executionStatus = document.getElementById("execution-status");
+          if (executionStatus) {
+            executionStatus.textContent = contractData.canExecute
+              ? "Ready"
+              : "Not Ready";
+            executionStatus.className = contractData.canExecute
+              ? "text-primary-green font-semibold"
+              : "text-red-400 font-semibold";
+          }
+
+          // Update sentiment score
+          const sentimentScore = document.getElementById("sentiment-score");
+          if (sentimentScore) {
+            sentimentScore.textContent = contractData.sentimentScore;
+          }
+
+          // Update sentiment input
+          const sentimentInput = document.getElementById(
+            "sentiment-input"
+          ) as HTMLInputElement;
+          if (sentimentInput) {
+            sentimentInput.value = contractData.sentimentScore.toString();
+          }
+        }
+      } catch (error) {
+        console.error("Failed to load contract status:", error);
+      }
+    }
+
+    async function updateSentiment() {
+      const input = document.getElementById(
+        "sentiment-input"
+      ) as HTMLInputElement;
+      const button = document.getElementById(
+        "update-sentiment-btn"
+      ) as HTMLButtonElement;
+
+      if (!input || !button) return;
+
+      const score = parseInt(input.value);
+      if (isNaN(score) || score < 0 || score > 100) {
+        alert("Please enter a valid score between 0 and 100");
+        return;
+      }
+
+      button.textContent = "Updating...";
+      button.disabled = true;
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/contract/sentiment`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ score }),
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          console.log("Sentiment updated successfully:", data.data);
+          await loadContractStatus(); // Reload status
+          alert("Sentiment score updated successfully!");
+        } else {
+          alert("Failed to update sentiment score");
+        }
+      } catch (error) {
+        console.error("Failed to update sentiment:", error);
+        alert("Failed to update sentiment score");
+      } finally {
+        button.textContent = "Update";
+        button.disabled = false;
+      }
+    }
+
+    // Initialize
+    document.addEventListener("DOMContentLoaded", () => {
+      loadContractStatus();
+
+      // Set up event listeners
+      const updateBtn = document.getElementById(
+        "update-sentiment-btn"
+      ) as HTMLButtonElement;
+      if (updateBtn) {
+        updateBtn.addEventListener("click", updateSentiment);
+      }
+
+      // Auto-refresh every 30 seconds
+      setInterval(loadContractStatus, 30000);
+    });
+  </script>
 </Layout>
